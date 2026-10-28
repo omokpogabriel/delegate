@@ -335,3 +335,7 @@ dialog.welcome::backdrop{background:rgba(10,24,18,.55);backdrop-filter:blur(3px)
 .syncdot.none i{background:var(--ink-2)}
 .syncdot.offline i,.syncdot.relink i{background:var(--coral)}
 @media (max-width:640px){.acct .syncdot{display:none}.acct>button{padding:4px}}
+
+/* keep nav buttons on one line */
+.nav .btn{white-space:nowrap}
+@media (max-width:400px){.nav .wrap{gap:12px}.nav .btn-sm{padding:8px 12px;font-size:.88rem}}

@@ -13,6 +13,8 @@ const PROFILE_KEY = "delegate.profile.v1";
 const PROGRESS_KEY = "delegate.progress.v1";
 const LOG_KEY = "delegate.failures.v2";
 const LEGACY_LOG_KEY = "delegate.failures.v1";
+/** sessionStorage: visitor closed the welcome form, so don't reopen it until their next visit */
+const DISMISSED_KEY = "delegate.welcome.dismissed";
 
 export type Profile = { name: string; email: string; updates: boolean; token: string | null };
 export type SyncState = "none" | "saving" | "saved" | "offline" | "relink";
@@ -70,7 +72,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [progress, setProgress] = useState<Progress>(() => read(PROGRESS_KEY, {}));
   const [logs, setLogs] = useState<LogEntry[]>(readLocalLogs);
   const [sync, setSync] = useState<SyncState>(() => (read<Profile | null>(PROFILE_KEY, null)?.token ? "saved" : "none"));
-  const [welcomeOpen, setWelcomeOpen] = useState(() => read(PROFILE_KEY, null) === null);
+  const [welcomeOpen, setWelcomeOpen] = useState(() => {
+    if (read(PROFILE_KEY, null) !== null) return false;
+    try { return sessionStorage.getItem(DISMISSED_KEY) !== "1"; } catch { return true; }
+  });
   const firstRun = useRef(true);
   const timer = useRef<number | undefined>(undefined);
 
@@ -179,7 +184,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     profile, progress, logs, sync, setItem, resetProgress, addLog, removeLog, linkAccount, saveProfileLocally,
     exportJSON, importJSON, forgetBrowser, welcomeOpen,
     openWelcome: () => setWelcomeOpen(true),
-    closeWelcome: () => setWelcomeOpen(false),
+    closeWelcome: () => {
+      try { sessionStorage.setItem(DISMISSED_KEY, "1"); } catch { /* ignore */ }
+      setWelcomeOpen(false);
+    },
   }), [profile, progress, logs, sync, setItem, resetProgress, addLog, removeLog, linkAccount, saveProfileLocally, exportJSON, importJSON, forgetBrowser, welcomeOpen]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

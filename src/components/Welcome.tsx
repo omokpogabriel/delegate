@@ -28,7 +28,6 @@ export function Welcome() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const dialog = useRef<HTMLDialogElement>(null);
-  const canClose = profile !== null; // first-time visitors must enter their details
 
   useEffect(() => {
     const d = dialog.current;
@@ -80,10 +79,10 @@ export function Welcome() {
 
   return (
     <dialog ref={dialog} className="welcome" aria-labelledby="wl-title"
-      onCancel={(e) => { if (!canClose) e.preventDefault(); else closeWelcome(); }}>
+      onCancel={closeWelcome}>
       <div className="wl-art" aria-hidden="true"><span className="s1" /><span className="s2" /><span className="s3" /></div>
       <div className="wl-body">
-        {canClose && <button className="wl-x" onClick={closeWelcome} aria-label="Close"><Icon name="x" /></button>}
+        <button className="wl-x" onClick={closeWelcome} aria-label="Close"><Icon name="x" /></button>
 
         {step === "details" && (
           <form onSubmit={submitDetails}>
@@ -96,6 +95,7 @@ export function Welcome() {
             <label className="wl-check"><input type="checkbox" checked={updates} onChange={(e) => setUpdates(e.target.checked)} /><span>Email me course updates and study reminders. You can opt out any time.</span></label>
             {err && <p className="err" role="alert">{err}</p>}
             <button className="btn btn-primary wl-go" disabled={busy}>{busy ? "Checking" : "Continue"}</button>
+            {!profile && <button type="button" className="linkbtn wl-back" onClick={closeWelcome}>Maybe later</button>}
             <p className="wl-fine">We use your email only for course updates and reminders you agree to, and to find your progress. We never share it.</p>
           </form>
         )}

@@ -14,7 +14,7 @@ const SYNC: Record<SyncState, { label: string; detail: string }> = {
 };
 
 export function Nav() {
-  const { progress, profile } = useStore();
+  const { progress, profile, openWelcome } = useStore();
   const { isDark, toggle } = useTheme();
   const o = overall(progress);
   const cta = o.next ? { to: `/lesson/${o.next.l.id}`, label: o.started ? "Continue learning" : "Start learning" } : { to: "/#content", label: "View curriculum" };
@@ -33,7 +33,7 @@ export function Nav() {
           <button className="iconbtn" onClick={toggle} aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}>
             <Icon name={isDark ? "sun" : "moon"} />
           </button>
-          {profile && <Account />}
+          {profile ? <Account /> : <button className="btn btn-ghost btn-sm" onClick={openWelcome}>Save my progress</button>}
           <Link className="btn btn-primary btn-sm" id="navCta" to={cta.to}>{cta.label}</Link>
         </div>
       </div>
