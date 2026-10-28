@@ -1,0 +1,8 @@
+# Cloudflare Pages project: static site from dist/ plus the functions/ API.
+name = "delegate"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-01"
+
+[[r2_buckets]]
+binding = "LEARNERS"
+bucket_name = "delegate-learners"
