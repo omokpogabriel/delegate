@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#050706" />
+    <style>html{background:#050706}html[data-theme="light"]{background:#F5F7F4}</style>
+    <script>try{if(JSON.parse(localStorage.getItem("delegate.theme"))==="light")document.documentElement.dataset.theme="light"}catch(e){}</script>
     <title>Delegate — learn to work with AI</title>
     <meta name="description" content="A 24-week, build-first course that takes a novice to a top-tier user of AI agents." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;0,800;1,400&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>

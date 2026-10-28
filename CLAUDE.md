@@ -30,8 +30,12 @@ Owner: Gabriel Omokpo (ISUX Technologies). Live at https://learnai.isuxtech.com
 - API client: `src/lib/api.ts`
 - First-visit form and secret question: `src/components/Welcome.tsx`
 - Pages: `src/pages/Home.tsx`, `src/pages/Lesson.tsx`
-- Styles: `src/styles.css` (colour tokens at the top; dark mode below)
+- Help button and panel (quick answers + message form): `src/components/Help.tsx`; answers and reply-time text in `src/content/help.ts`
+- Styles: `src/styles.css`. Dark "studio" theme is the default (tokens in `:root`); light theme lives in `:root[data-theme="light"]`.
+  The final "Studio theme" block adds glass cards, the hero grid and light beam. Fonts: Geist + Geist Mono, self-hosted via @fontsource-variable.
 - API: `functions/api/{lookup,register,restore,save}.ts`, `functions/api/admin/subscribers.ts` (CSV, needs `ADMIN_KEY`)
+- Help messages: `functions/api/help.ts` saves to R2 `messages/<iso>-<id>.json` (honeypot + 5/hour per IP);
+  `functions/api/admin/messages.ts` lists them (JSON, or `?format=csv`; needs `ADMIN_KEY`)
 - Shared server logic and the R2 record schema: `functions/_shared.ts`
 
 ## Progress keys

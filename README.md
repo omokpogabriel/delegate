@@ -62,6 +62,8 @@ Progress keys: `L<lesson id>` for lessons (e.g. `L1-2`), `t<week>_<index>` for w
 | `POST /api/restore` | `{ email, answer }` | learner data and a save token, `401` for a wrong answer, `423` when locked |
 | `PUT /api/save` | `{ email, token, data }` | `{ updatedAt }`, or `401` for a bad token |
 | `GET /api/admin/subscribers` | header `Authorization: Bearer <ADMIN_KEY>` | CSV of learners who opted in to updates |
+| `POST /api/help` | `{ name, email, subject, message, page }` | saves a help message to R2 (`messages/…json`); 5 per visitor per hour |
+| `GET /api/admin/messages` | header `Authorization: Bearer <ADMIN_KEY>`; add `?format=csv` for a spreadsheet | help messages, newest first |
 
 ## Run locally
 
@@ -134,6 +136,21 @@ curl -H "Authorization: Bearer <your key>" https://<your-site>/api/admin/subscri
 Nothing else on `isuxtech.com` changes. Your main site on AWS keeps working.
 
 Links like `/lesson/1-2` work on refresh with no extra setup. Cloudflare Pages serves `index.html` for unknown paths when the site has no `404.html`.
+
+## Help button
+
+A floating **Help** button (bottom right) opens a panel with searchable quick answers and a **Message us** form.
+
+- Edit the answers and the reply-time promise in `src/content/help.ts`.
+- Messages are saved in the R2 bucket under `messages/`. Read them in the Cloudflare dashboard (**R2 → delegate-learners → messages/**), or download them all:
+
+  ```bash
+  curl -H "Authorization: Bearer <your key>" "https://learnai.isuxtech.com/api/admin/messages?format=csv" -o messages.csv
+  ```
+
+- Reply from your own email. There are no email notifications yet, so check messages regularly.
+- **Resetting a forgotten secret answer:** delete that learner's file in R2. The file name is the SHA-256 of their lowercased email (`learners/<hash>.json`). They can then sign up again with the same email, and progress still in their browser is carried into the new account.
+- Spam protection: a hidden honeypot field plus a limit of 5 messages per visitor per hour.
 
 ## Adding lessons
 

@@ -67,7 +67,7 @@ function LessonView({ idx }: { idx: number }) {
 
             {vids.length > 1 && (
               <div className="card">
-                <h2><span className="ico" style={{ background: "var(--coral)" }}><Icon name="play" /></span>More to watch</h2>
+                <h2><span className="ico" style={{ ["--c" as string]: "var(--coral)" }}><Icon name="play" /></span>More to watch</h2>
                 <div className="vlist">
                   {vids.slice(1).map((v) => (
                     <div className="v" key={v.id}><div className="fr"><Embed id={v.id} title={v.title} /></div><p>{v.title} <span>({v.len})</span></p></div>
@@ -78,7 +78,7 @@ function LessonView({ idx }: { idx: number }) {
 
             {l.read.length > 0 && (
               <div className="card">
-                <h2><span className="ico" style={{ background: "var(--sky)" }}><Icon name="book" /></span>Read</h2>
+                <h2><span className="ico" style={{ ["--c" as string]: "var(--sky)" }}><Icon name="book" /></span>Read</h2>
                 <ul className="rlist">
                   {l.read.map((r) => <li key={r.url}><a href={r.url} target="_blank" rel="noopener"><Icon name="link" />{r.title}</a></li>)}
                 </ul>
@@ -86,7 +86,7 @@ function LessonView({ idx }: { idx: number }) {
             )}
 
             <div className="card">
-              <h2><span className="ico" style={{ background: "#E0A100" }}><Icon name="pen" /></span>Exercise</h2>
+              <h2><span className="ico" style={{ ["--c" as string]: "var(--sun)" }}><Icon name="pen" /></span>Exercise</h2>
               <div className="ex" dangerouslySetInnerHTML={{ __html: l.exercise }} />
             </div>
 
@@ -117,7 +117,7 @@ function Quiz({ questions }: { questions: QuizQuestion[] }) {
   const correct = questions.filter((q, qi) => picks[qi] === q.a).length;
   return (
     <div className="card">
-      <h2><span className="ico" style={{ background: "var(--lilac)" }}><Icon name="quiz" /></span>Check your understanding</h2>
+      <h2><span className="ico" style={{ ["--c" as string]: "var(--lilac)" }}><Icon name="quiz" /></span>Check your understanding</h2>
       {questions.map((q, qi) => {
         const pick = picks[qi];
         const ok = pick === q.a;

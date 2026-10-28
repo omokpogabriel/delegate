@@ -30,7 +30,7 @@ function Hero() {
       <div className="wrap">
         <div>
           <span className="pill"><i />Self-paced, 24 weeks, free</span>
-          <h1>{profile ? `${profile.name.split(" ")[0]}, become one of the best users of AI.` : "Become one of the best users of AI in six months."}</h1>
+          <h1>{profile ? `${profile.name.split(" ")[0]}, become one of ` : "Become one of "}<span className="accent">the best users of AI</span>{profile ? "." : " in six months."}</h1>
           <p className="lede">A hands-on course for people who want to hand real work to AI agents and trust what comes back. Short lessons, real projects, and a practical exam at the end of every month.</p>
           <div className="ctas">
             <Link className="btn btn-primary" to={href}>{label}</Link>
@@ -122,7 +122,7 @@ function Method() {
         <div className="shead"><div><h2>How the course works</h2><p>About 10–12 hours a week. Concepts early in the week, building midweek, review and a short write-up at the end.</p></div></div>
         <div className="features">
           {feats.map((f) => (
-            <div className="feat" key={f.t}><div className="ico" style={{ background: f.c }}><Icon name={f.i} /></div><h3>{f.t}</h3><p>{f.d}</p></div>
+            <div className="feat" key={f.t}><div className="ico" style={{ ["--c" as string]: f.c }}><Icon name={f.i} /></div><h3>{f.t}</h3><p>{f.d}</p></div>
           ))}
         </div>
         <div className="learn">

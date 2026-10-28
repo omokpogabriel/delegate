@@ -38,3 +38,6 @@ export const register = (p: { name: string; email: string; question: string; ans
 export const restore = (email: string, answer: string) => call<Account>("restore", "POST", { email, answer });
 
 export const save = (email: string, token: string, data: LearnerData) => call<{ updatedAt: string }>("save", "PUT", { email, token, data });
+
+export const sendHelp = (m: { name: string; email: string; subject: string; message: string; page: string; website: string }) =>
+  call<{ ok: true }>("help", "POST", m);

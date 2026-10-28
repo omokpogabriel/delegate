@@ -20,6 +20,7 @@ const PATHS: Record<string, string[]> = {
   cloud: ["M7 18a4 4 0 0 1-.5-8 6 6 0 0 1 11.6 1.5A3.5 3.5 0 0 1 17.5 18z"],
   devices: ["M3 5h13v9H3z", "M1 18h17M19 8h4v11h-4z"],
   x: ["M6 6l12 12M18 6L6 18"],
+  search: ["M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14z", "M20 20l-4-4"],
   download: ["M12 4v11M7 10l5 5 5-5", "M5 20h14"],
   upload: ["M12 20V9M7 14l5-5 5 5", "M5 4h14"],
   user: ["M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z", "M4 21a8 8 0 0 1 16 0"],

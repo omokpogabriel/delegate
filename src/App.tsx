@@ -5,6 +5,7 @@ import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
 import { LessonPage } from "./pages/Lesson";
 import { Welcome } from "./components/Welcome";
+import { Help } from "./components/Help";
 
 export function App() {
   return (
@@ -21,6 +22,7 @@ export function App() {
       </main>
       <Footer />
       <Welcome />
+      <Help />
     </>
   );
 }
