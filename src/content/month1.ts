@@ -7,7 +7,8 @@ const V: Record<string, Resource> = {
   briefly: {title:"Large Language Models explained briefly — 3Blue1Brown", len:"8 min", url:"https://www.youtube.com/watch?v=LPZh9BOjkQs"},
   transformers: {title:"How transformers and attention work (talk) — 3Blue1Brown", len:"1 hr", url:"https://www.youtube.com/watch?v=KJtZARuO3JY"},
   contextWindow: {title:"What is a context window? — IBM Technology", len:"11 min", url:"https://www.youtube.com/watch?v=-QVoIxEpFkM"},
-  hallucinate: {title:"Why large language models hallucinate — IBM Technology", len:"9 min", url:"https://www.youtube.com/watch?v=cfqtFvWOfg0"}
+  hallucinate: {title:"Why large language models hallucinate — IBM Technology", len:"9 min", url:"https://www.youtube.com/watch?v=cfqtFvWOfg0"},
+  temperature: {title:"LLM temperature explained in 5 minutes — KodeKloud", len:"5 min", url:"https://www.youtube.com/watch?v=IWSutLJbURU"}
 };
 const R: Record<string, Resource> = {
   tokens: {title:"What are tokens and how to count them — OpenAI Help", url:"https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them"},
@@ -97,7 +98,7 @@ export const week1: Lesson[] = [
 <p>The professional habit is to run things several times and look at the spread. That habit grows into <em>evals</em> in Month 3, where you'll run a prompt against 30+ test cases and measure a success rate instead of trusting a single run.</p>
 <h3>You often can't set it</h3>
 <p>Chat apps choose the sampling settings for you. Agents and newer reasoning models often fix them too. You'll get full control when you call models through the API, which you'll do in Month 3. For now, the lesson is conceptual: variation is built in, so judge on several runs.</p>`,
-  watch:[V.briefly],
+  watch:[V.temperature],
   read:[],
   exercise:`<p>This is the Week 1 build. In a chat app, ask the same open question five times in fresh chats (for example, "Suggest a name and one-line pitch for a Lagos logistics startup"). Then ask a factual question five times ("What is 17% of 2,350?"). Log all ten answers in a table. Write three sentences on where variation helped and where it would be dangerous.</p>`,
   quiz:[
