@@ -7,6 +7,12 @@ export interface Env {
   LEARNERS: R2Bucket;
   /** optional: set with `wrangler pages secret put ADMIN_KEY` to enable the subscriber export */
   ADMIN_KEY?: string;
+  /** optional: Resend API key; when set, /api/feedback also emails each feedback (`wrangler pages secret put RESEND_API_KEY`) */
+  RESEND_API_KEY?: string;
+  /** optional: where feedback emails go (default learn@isuxtech.com) */
+  FEEDBACK_TO?: string;
+  /** optional: sender, on a domain verified in Resend (default "Delegate feedback <feedback@isuxtech.com>") */
+  FEEDBACK_FROM?: string;
 }
 
 export type LearnerData = {

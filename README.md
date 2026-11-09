@@ -175,3 +175,23 @@ src/
   pages/                     Home, Lesson
 wrangler.toml                Pages config and the R2 binding
 ```
+
+## Feedback emails
+
+Learners can send quick feedback from the **Feedback** button on every page, or at `/feedback`.
+Each one is saved to R2 at `feedback/<timestamp>-<id>.json` and, once Resend is set up, emailed to `learn@isuxtech.com`.
+
+One-time setup (about 10 minutes):
+
+1. Create a free account at resend.com.
+2. In Resend, go to **Domains → Add domain** and enter `isuxtech.com`. Resend shows a few DNS records
+   (they use a `send.` subdomain and a `resend._domainkey` record, so they don't clash with Cloudflare Email Routing's MX records).
+3. Add those records wherever `isuxtech.com`'s DNS is managed (Cloudflare if Email Routing is set up there), then click **Verify** in Resend.
+4. In Resend, create an API key with "Sending access".
+5. Save it as a secret on the Pages project:
+   `npx wrangler pages secret put RESEND_API_KEY --project-name delegate`
+6. Redeploy (`npm run deploy`) and send a test from `/feedback`.
+
+Optional settings (Pages environment variables): `FEEDBACK_TO` (default `learn@isuxtech.com`) and
+`FEEDBACK_FROM` (default `Delegate feedback <feedback@isuxtech.com>`; must be on the verified domain).
+Until the key is set, feedback is still saved to R2, just not emailed.

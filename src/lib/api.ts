@@ -41,3 +41,6 @@ export const save = (email: string, token: string, data: LearnerData) => call<{ 
 
 export const sendHelp = (m: { name: string; email: string; subject: string; message: string; page: string; website: string }) =>
   call<{ ok: true }>("help", "POST", m);
+
+export const sendFeedback = (f: { rating: number | null; message: string; email: string; page: string; track: string; website: string }) =>
+  call<{ ok: true }>("feedback", "POST", f);

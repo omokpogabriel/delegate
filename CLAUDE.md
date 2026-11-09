@@ -36,6 +36,7 @@ Owner: Gabriel Omokpo (ISUX Technologies). Live at https://learnai.isuxtech.com
 - Styles: `src/styles.css`. Dark "studio" theme is the default (tokens in `:root`); light theme lives in `:root[data-theme="light"]`.
   The final "Studio theme" block adds glass cards, the hero grid and light beam. Fonts: Geist + Geist Mono, self-hosted via @fontsource-variable.
 - API: `functions/api/{lookup,register,restore,save}.ts`, `functions/api/admin/subscribers.ts` (CSV, needs `ADMIN_KEY`)
+- Feedback: `functions/api/feedback.ts` saves to R2 `feedback/` and emails learn@isuxtech.com via Resend (`RESEND_API_KEY`); UI in `src/components/Feedback.tsx` and `/feedback`. Setup in README.
 - Help messages: `functions/api/help.ts` saves to R2 `messages/<iso>-<id>.json` (honeypot + 5/hour per IP);
   `functions/api/admin/messages.ts` lists them (JSON, or `?format=csv`; needs `ADMIN_KEY`)
 - Shared server logic and the R2 record schema: `functions/_shared.ts`
