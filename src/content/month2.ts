@@ -1,5 +1,4 @@
 import type { Lesson, Resource } from "./types";
-import { U } from "./unis";
 
 // Month 2 lessons (weeks 5–8): coding agents in depth.
 // Written for people new to software tooling: every new term is explained where it first appears,
@@ -359,7 +358,7 @@ export const week7: Lesson[] = [
 3. Run the whole test suite and show me the result.</pre>
 <p>This brief gives the agent a way to check itself, which means you review evidence instead of promises.</p>
 <div class="callout"><b>Stuck?</b> If your project has no tests at all, ask the agent: "Set up the standard test framework for this project, add one example test, and add the test command to CLAUDE.md." Then run that command yourself once. Seeing a passing test on your own machine is the moment testing stops feeling theoretical.</div>`,
-  watch:[U.berkeleySwe],
+  watch:[],
   read:[R.tdd, R.best],
   exercise:`<p>Pick a small real bug or feature. Use the three-step brief above. Keep the terminal output that shows the test failing first and then passing, and paste both into your weekly write-up.</p>`,
   problems:[

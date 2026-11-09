@@ -5,6 +5,13 @@ import { U } from "../unis";
 // Maths in \( \) or \[ \]; h`...` keeps backslashes.
 const h = String.raw;
 
+const V: Record<string, Resource> = {
+  lintrans: {title:"Linear transformations and matrices — Essence of linear algebra, chapter 3", src:"3Blue1Brown", len:"11 min", url:"https://www.youtube.com/watch?v=kYB8IZa5AuE"},
+  composition: {title:"Matrix multiplication as composition — Essence of linear algebra, chapter 4", src:"3Blue1Brown", len:"10 min", url:"https://www.youtube.com/watch?v=XkY2DOUCWMU"},
+  numpy: {title:"Learn NumPy in 5 minutes — Python Programmer", len:"14 min", url:"https://www.youtube.com/watch?v=xECXZ3tyONo"},
+  broadcast: {title:"Learn NumPy broadcasting in 6 minutes — Bro Code", len:"6 min", url:"https://www.youtube.com/watch?v=P67wiuTx7l0"}
+};
+
 const R: Record<string, Resource> = {
   ocw: {title:"MIT 18.06 Linear Algebra — lecture notes, problem sets and exams (OpenCourseWare)", url:"https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/"},
   mml: {title:"Mathematics for Machine Learning (Deisenroth, Faisal, Ong), Chapters 2–3, free PDF", url:"https://mml-book.github.io"},
@@ -118,7 +125,7 @@ export const week1: Lesson[] = [
 <li>\((m\times n)(n\times p)\) costs \(mnp\) multiply-adds.</li>
 <li>Layers, batches, attention and embeddings are all matrix products.</li>
 </ul>`,
-  watch:[U.strang1],
+  watch:[V.lintrans, V.composition],
   read:[R.ocw, R.mml],
   exercise:h`<p>Implement <code>matvec(A, x)</code> twice in plain Python, once with the row picture and once with the column picture, and check both against <code>A @ x</code> in NumPy on random 50×30 matrices. Then implement a two-layer forward pass \(\sigma(W_2\,\sigma(W_1 x + b_1) + b_2)\) for a batch of 32 inputs using only <code>@</code> and broadcasting.</p>`,
   problems:[
@@ -224,7 +231,7 @@ top5 = np.argsort(-(E @ q))[:5]                     # cosine = dot product</pre>
 
 <h3>5. Precision</h3>
 <p>NumPy defaults to 64-bit floats; deep learning uses 32-bit, 16-bit and lower. Lower precision halves memory and speeds up computation but loses accuracy: in 16-bit, \(1 + 10^{-4}\) rounds to 1. You will see why that matters in Month 4 (quantisation).</p>`,
-  watch:[],
+  watch:[V.numpy, V.broadcast],
   read:[R.numpy, R.d2l],
   exercise:h`<p>This is the Week 1 build. Generate 1,000 vectors in \(\mathbb{R}^{384}\). Implement nearest-neighbour search three ways: pure Python loops, NumPy with a Python loop over documents, and the fully vectorised version above. Time each with <code>timeit</code> and plot the times on a log scale. In your write-up, use the lesson 1.2 cost formula to predict the time, and compare the prediction with what you measured.</p>`,
   problems:[

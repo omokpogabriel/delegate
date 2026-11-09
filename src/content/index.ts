@@ -5,6 +5,7 @@ import { week5, week6, week7, week8 } from "./month2";
 import { week9 } from "./week9";
 import { week10 } from "./month3";
 import { UPGRADES } from "./lectures";
+import { CORE_VIDEOS } from "./videos";
 import { E_LINKS, E_MONTHS } from "./engineer/course";
 import { E_LESSONS } from "./engineer";
 import type { Lesson, LessonUpgrade, Month, Week } from "./types";
@@ -36,7 +37,7 @@ export type TrackCopy = {
  * theory notes and the problem set move into the optional `deep` section; the core lesson stays short.
  */
 function upgrade(l: Lesson, u: LessonUpgrade | undefined, split: boolean): Lesson {
-  const watch = [...(u?.lectures ?? []), ...l.watch];
+  const watch = [...(u?.lectures ?? []), ...l.watch, ...(split ? CORE_VIDEOS[l.id] ?? [] : [])];
   const base: Lesson = {
     ...l,
     objectives: u?.objectives ?? l.objectives,

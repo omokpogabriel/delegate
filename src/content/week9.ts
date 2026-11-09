@@ -64,7 +64,7 @@ print("tokens in:", response.usage.input_tokens, "out:", response.usage.output_t
 <p>Every call has the same core parts: the <b>model</b> name, <b>max_tokens</b> (the most the reply may use, which caps your cost) and <b>messages</b> (the conversation). The response contains the reply and a <b>usage</b> record of tokens in and out, which is what you pay for (lesson 1.2).</p>
 <div class="callout"><b>No card, or can't pay in dollars yet?</b> Many learners in Nigeria hit this wall, and it shouldn't stop you. Install Ollama (Week 10 covers it in detail), run <code>ollama pull qwen2.5:3b</code>, and call it through its OpenAI-compatible endpoint at <code>http://localhost:11434/v1</code> using the <code>openai</code> Python package (<code>pip install openai</code>). It's free, runs on your own computer, and every idea in this week works the same way. The Ollama docs linked below show the exact code.</div>
 <div class="callout"><b>Stuck?</b> The three most common errors: <code>'python' is not recognized</code> means Python isn't on your PATH (reinstall with the PATH box ticked, then open a new terminal); <code>ModuleNotFoundError: anthropic</code> means the virtual environment isn't active (run the activate line again); <code>401</code> or "authentication error" means the key isn't set in <em>this</em> terminal (set it again, or open a new terminal after <code>setx</code>).</div>`,
-  watch:[U.mit191llm],
+  watch:[],
   read:[R.messages, R.ollamaOpenAI],
   exercise:`<p>Make the call above work on your machine. Then change three things one at a time and note what happens: set <code>max_tokens</code> to 20 (the reply is cut off), ask the same question three times (the answers vary, lesson 1.3), and ask in Pidgin or Yoruba (compare the token counts with English, lesson 1.2).</p>`,
   problems:[
@@ -118,7 +118,7 @@ while True:
     history.append({"role": "assistant", "content": answer})
     print("ai:", answer)</pre>
 <div class="callout"><b>Stuck?</b> If you get an error about roles, check that the list alternates <code>user</code>, <code>assistant</code>, <code>user</code>, and that it starts and ends with <code>user</code> when you send it. Forgetting to append the assistant's reply is the most common bug: the model then "forgets" what it just said.</div>`,
-  watch:[U.cs224n_prompt],
+  watch:[],
   read:[R.messages],
   exercise:`<p>Build the chat loop. Give it a system prompt for a real use (a support bot for a business you know). Have a 10-turn conversation, then print the total input tokens of the last call and explain why it's much bigger than the first.</p>`,
   problems:[
@@ -235,7 +235,7 @@ print("".join(b.text for b in reply.content if b.type == "text"))</pre>
 <h3>Safety</h3>
 <p>Because your code runs the tool, you're in control. Add a step limit to the loop (for example 10 rounds), validate inputs before running anything, and never give a model a tool that can do damage, like sending money or deleting records, without a human approval step.</p>
 <div class="callout"><b>Stuck?</b> The classic errors: forgetting to append the assistant's reply before the tool results (the API then rejects the request), a <code>tool_use_id</code> that doesn't match, and an infinite loop because the tool keeps returning an error the model can't fix. Print <code>reply.stop_reason</code> and each block on every round while you're learning: watching the loop step by step makes it click.</div>`,
-  watch:[U.berkeleyAgents, U.cs224n_agents],
+  watch:[U.cs224n_agents],
   read:[R.tools, R.writingTools],
   exercise:`<p>Extend the example with a second tool, <code>cancel_order(order_id, reason)</code>, that only "cancels" after asking for confirmation in the terminal (<code>input("approve? y/n")</code>). Add a 10-round step limit. Try five different customer messages, including one that should use neither tool, and log every tool call.</p>`,
   problems:[

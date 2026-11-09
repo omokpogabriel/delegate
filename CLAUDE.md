@@ -64,3 +64,7 @@ a university lecture (verify channel, title, length and embeddability before add
 ## Go deep writing rule
 Plain English first, then the formula, then what every symbol means, then a small worked example, then why it matters.
 Worked solutions go step by step with the numbers shown. Keep the maths correct: explain it, never drop it.
+
+## Videos
+- Agent-track core videos live in `src/content/videos.ts` (by lesson id). Every lesson must have at least one, on its topic.
+- No video may appear in more than one lesson, core or Go deep. Check channel, length and embedding before adding one.
