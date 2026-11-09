@@ -31,7 +31,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "1-2": {
   objectives: ["Estimate how many tokens a task uses and what it will cost","Plan how much fits in a context window during a long task","Explain why some tasks and languages cost more tokens"],
-  lectures: [U.cs336_1],
+  lectures: [U.cme295_tok, U.cme295_ctx, U.cs336_1],
   problems: [
    {q:h`<p>Each request sends a 2,000-token system prompt plus a 500-token user message, and gets a 400-token reply. Input costs $3 per million tokens; output costs $15 per million. What does it cost to handle 10,000 requests a day?</p>`,
     a:h`<p><b>Step 1, input tokens:</b> each request sends 2,000 + 500 = 2,500 tokens. Times 10,000 requests = 25,000,000 tokens (25 million).</p><p><b>Step 2, input cost:</b> 25 million × $3 per million = <b>$75</b>.</p><p><b>Step 3, output:</b> 400 × 10,000 = 4 million tokens × $15 per million = <b>$60</b>.</p><p><b>Total:</b> $135 a day, about $4,000 a month. Notice that the system prompt, sent again with every request, is most of the input. That's exactly what prompt caching makes cheaper.</p>`},
