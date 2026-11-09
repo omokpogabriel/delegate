@@ -183,7 +183,11 @@ function GoDeep({ t, l }: { t: Track; l: Lesson }) {
       </summary>
       <div className="deepbody">
         <p className="muted">Nothing here is needed to complete the {t.copy.unit}. Take it when you're curious, now or later.</p>
-        {vids.length > 0 && <><h3>University lecture{vids.length > 1 ? "s" : ""}</h3><VideoGrid vids={vids} /></>}
+        {vids.length > 0 && <>
+          <h3>University lecture{vids.length > 1 ? "s" : ""}</h3>
+          <p className="tip">These are real university classes, so they move fast and assume some background. Watch at your own pace, pause often, and stop when it goes beyond what you need: even the first 20 minutes is worth it. Don't worry if parts go over your head.</p>
+          <VideoGrid vids={vids} />
+        </>}
         {d.notes && <div className="prose" dangerouslySetInnerHTML={{ __html: withMath(d.notes) }} />}
         {d.problems && d.problems.length > 0 && <><h3>Problems</h3><Problems problems={d.problems} bare /></>}
         <button className="btn btn-ghost btn-sm" aria-pressed={done} onClick={() => setItem(key, !done)}>
@@ -198,7 +202,7 @@ function Problems({ problems, bare }: { problems: Problem[]; bare?: boolean }) {
   return (
     <>
       {!bare && <h2><span className="ico" style={{ ["--c" as string]: "var(--coral)" }}><Icon name="pen" /></span>Problem set</h2>}
-      <p className="muted pintro">Work each problem on paper before you open the solution.</p>
+      <p className="muted pintro">Have a go first, even a rough guess, then open the solution. Each one is worked through step by step, and getting it wrong first is how it sticks.</p>
       <ol className="probs">
         {problems.map((p, i) => (
           <li key={i}>

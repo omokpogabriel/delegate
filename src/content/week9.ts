@@ -123,7 +123,7 @@ while True:
   exercise:`<p>Build the chat loop. Give it a system prompt for a real use (a support bot for a business you know). Have a 10-turn conversation, then print the total input tokens of the last call and explain why it's much bigger than the first.</p>`,
   problems:[
     {q:"<p>Each turn adds about 150 tokens to the history, and the system prompt is 400 tokens. How many input tokens does turn 20 send, and why is that a cost problem?</p>",
-     a:"<p>About \\(400 + 20 \\times 150 = 3{,}400\\) tokens. Each turn resends everything, so the total input over the conversation grows roughly with the square of the number of turns. Fixes: trim or summarise old turns, and use prompt caching for the fixed system prompt.</p>"},
+     a:"<p><b>Turn 20:</b> 400 + (20 × 150) = 400 + 3,000 = <b>3,400</b> input tokens.</p><p><b>Why it adds up:</b> you pay for the whole history again on every turn. Turn 1 sends about 550 tokens, turn 10 about 1,900, and turn 20 about 3,400, so later turns cost several times more than early ones, and the total climbs quickly. <b>Fixes:</b> trim or summarise old turns, and use prompt caching for the system prompt that never changes.</p>"},
     {q:"<p>Where should \"never invent a price\" go: the system prompt or a user message? Why?</p>",
      a:"<p>The system prompt. It's a rule for the whole conversation, and the system prompt is where the product's role and rules live, separate from what the customer types.</p>"}
   ],

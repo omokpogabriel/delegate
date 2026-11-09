@@ -556,3 +556,4 @@ details.deep>summary small{color:#4B5D55}
 details.deep>summary .chev{color:#13241D}
 details.deep>summary:hover{background:#FFFFFF}
 details.deep[open]>summary{border-bottom:1px solid #DDE5E0}
+details.deep .tip{font-size:.92rem;color:var(--ink-2);margin:-4px 0 14px;max-width:70ch}

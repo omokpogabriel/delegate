@@ -60,3 +60,7 @@ a university lecture (verify channel, title, length and embeddability before add
 - Lesson HTML is trusted author content rendered with dangerouslySetInnerHTML: never put user input there.
 - Keep the browser-first design: the site must work if the API is down.
 - Verify changes with `npm run build` and `npm run typecheck:functions` before handing over.
+
+## Go deep writing rule
+Plain English first, then the formula, then what every symbol means, then a small worked example, then why it matters.
+Worked solutions go step by step with the numbers shown. Keep the maths correct: explain it, never drop it.
