@@ -36,6 +36,7 @@ export default {
       return reply(200, { ok: true, messageId: res.messageId });
     } catch (e) {
       const err = e as { code?: string; message?: string };
+      console.error("send failed", err.code, err.message, "to:", env.MAIL_TO, "from:", env.MAIL_FROM);
       return reply(502, { ok: false, error: `${err.code ?? "send_failed"}: ${err.message ?? "unknown error"}` });
     }
   },

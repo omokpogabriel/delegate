@@ -188,7 +188,7 @@ One-time setup:
 
 1. In the Cloudflare dashboard, open **Email → Email Routing → Destination addresses** for isuxtech.com and
    check which inbox is **verified**. The Worker can only send to a verified destination address.
-2. In `workers/mailer/wrangler.toml`, set `MAIL_TO` to that verified address (it's `learn@isuxtech.com` now;
+2. In `workers/mailer/wrangler.toml`, set `MAIL_TO` to that verified address (it is `isuxtechnologies@gmail.com`;
    if learn@ is a custom address that forwards to another inbox, put that inbox here). `MAIL_FROM` can be any
    address on isuxtech.com.
 3. Deploy the Worker once: `npm run deploy:mailer` (needs `wrangler login`).

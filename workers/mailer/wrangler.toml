@@ -13,8 +13,8 @@ MAIL_FROM = "feedback@isuxtech.com"
 MAIL_FROM_NAME = "Delegate feedback"
 # Recipient: must be a VERIFIED destination address in Email Routing (Email → Email Routing → Destination addresses).
 # Sending to verified destinations is free on the Workers Free plan. If learn@isuxtech.com is a custom address that
-# forwards to another inbox, put that inbox here instead.
-MAIL_TO = "learn@isuxtech.com"
+# forwards to another inbox, put that inbox here instead. learn@isuxtech.com is not verified, so this is the inbox it uses.
+MAIL_TO = "isuxtechnologies@gmail.com"
 
 [[send_email]]
 name = "EMAIL"
