@@ -17,6 +17,8 @@ export function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/lesson/:id" element={<LessonPage />} />
+          <Route path="/engineer" element={<Home />} />
+          <Route path="/engineer/lesson/:id" element={<LessonPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

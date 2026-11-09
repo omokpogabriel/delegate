@@ -22,10 +22,12 @@ Owner: Gabriel Omokpo (ISUX Technologies). Live at https://learnai.isuxtech.com
 - `npm run deploy`: build and deploy to Cloudflare Pages (needs `wrangler login`)
 
 ## Where things live
-- Course content: `src/content/`
-  - `course.ts`: outline (6 months × 4 weeks: title, build, tasks, exam, reading links)
-  - `month1.ts` (weeks 1–4), `month3.ts` (week 10): full lessons (body HTML, videos, reading, exercise, 3-question quiz)
-  - `index.ts`: registers lessons by week number + progress helpers
+- Two tracks, each a 24-week course built by `makeTrack()` in `src/content/index.ts`; `useTrack()` picks one from the URL:
+  - **Agent user** (`/`, `/lesson/:id`): `course.ts` outline, lessons in `month1.ts` (weeks 1–4) and `month3.ts` (week 10)
+  - **AI engineer** (`/engineer`, `/engineer/lesson/:id`): `engineer/course.ts` outline, lessons in `engineer/week1.ts` (registered in `engineer/index.ts`)
+- `unis.ts`: verified university lectures (Stanford, MIT, Harvard, Berkeley). `embed:false` = publisher disabled embedding, so the page links out
+- `lectures.ts`: lecture upgrades for agent-track lessons (objectives, university lectures, extra notes, problem sets), merged by lesson id
+- Maths: write `\( \)` / `\[ \]` inside `String.raw` (h`...`) strings; rendered with KaTeX by `src/lib/math.ts`
 - Learner state, local storage and background sync: `src/lib/store.tsx`
 - API client: `src/lib/api.ts`
 - First-visit form and secret question: `src/components/Welcome.tsx`
@@ -40,11 +42,17 @@ Owner: Gabriel Omokpo (ISUX Technologies). Live at https://learnai.isuxtech.com
 
 ## Progress keys
 `L<lessonId>` for lessons (e.g. `L1-2`), `t<week>_<index>` for weekly tasks (e.g. `t3_0`). Don't rename these:
-learners' saved progress depends on them.
+learners' saved progress depends on them. The AI engineer track adds an `e` prefix (`Le1-2`, `te3_0`).
 
 ## Status
-- Lessons written: weeks 1–4 and week 10. Other weeks show build + tasks with "lessons in production".
-- Next likely work: lessons for Month 2 (weeks 5–8), then weeks 9 and 11–12.
+- Agent track: lessons for weeks 1–4 and week 10, all upgraded with objectives + problem sets; 12 of 20 have a university lecture.
+- AI engineer track: outline for all 24 weeks, each anchored to a named lecture; full lecture notes for Week 1 only.
+- Next likely work: AI engineer weeks 2–4 (probability, gradient descent, logistic regression), then agent-track Month 2.
+
+## Lecture standard
+Each lecture: learning objectives, prerequisites, rigorous notes with worked examples and the maths written out,
+a university lecture (verify channel, title, length and embeddability before adding), an exercise,
+2–4 problems with worked solutions (check the arithmetic), and a 3-question quiz.
 
 ## Conventions
 - Lesson writing: plain, direct, practical. Each lesson: ~10–15 min read, real exercise, 3 quiz questions
