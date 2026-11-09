@@ -130,6 +130,8 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
               </div>
             )}
 
+            {l.deep && <GoDeep t={t} l={l} />}
+
             <div className="card">
               <h2><span className="ico" style={{ ["--c" as string]: "var(--sun)" }}><Icon name="hammer" /></span>Exercise</h2>
               <div className="ex" dangerouslySetInnerHTML={{ __html: withMath(l.exercise) }} />
@@ -138,8 +140,6 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
             {l.problems && <div className="card"><Problems problems={l.problems} /></div>}
 
             <Quiz questions={l.quiz} unit={unit} />
-
-            {l.deep && <GoDeep t={t} l={l} />}
 
             <div className="actions">
               {prev ? <Link className="btn btn-ghost btn-sm" to={t.lessonHref(prev.l.id)}><Icon name="left" />Previous</Link> : <span />}
@@ -160,7 +160,7 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
   );
 }
 
-/** Optional depth after the quiz: collapsed by default, never needed to complete the lesson. */
+/** Optional depth before the exercise: collapsed by default, never needed to complete the lesson. */
 function GoDeep({ t, l }: { t: Track; l: Lesson }) {
   const { progress, setItem } = useStore();
   const d = l.deep!;

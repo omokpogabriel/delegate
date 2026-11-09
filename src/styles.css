@@ -549,3 +549,10 @@ details.deep .deepbody h3{font-size:1.1rem;margin:24px 0 12px}
 details.deep .deepbody>.btn{margin-top:22px}
 .deepmark{font-style:normal;font-size:.68rem;font-weight:700;color:var(--sky);border:1px solid var(--sky);border-radius:999px;padding:0 7px;margin-left:8px;vertical-align:middle}
 @media (max-width:600px){details.deep>summary{padding:18px}details.deep .deepbody{padding:0 18px 20px}}
+/* Go deep invitation: inverted (dark text on a light bar) in both themes */
+details.deep{border:1px solid #DDE5E0}
+details.deep>summary{background:#F4F7F5;color:#13241D}
+details.deep>summary small{color:#4B5D55}
+details.deep>summary .chev{color:#13241D}
+details.deep>summary:hover{background:#FFFFFF}
+details.deep[open]>summary{border-bottom:1px solid #DDE5E0}
