@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Icon } from "./Icon";
 import { useStore, type SyncState } from "../lib/store";
 import { useTheme } from "../lib/theme";
-import { overall } from "../content";
+import { AGENTS, ENGINEER, useTrack } from "../content";
 
 const SYNC: Record<SyncState, { label: string; detail: string }> = {
   none: { label: "This browser only", detail: "Your progress is saved in this browser only." },
@@ -16,18 +16,20 @@ const SYNC: Record<SyncState, { label: string; detail: string }> = {
 export function Nav() {
   const { progress, profile, openWelcome } = useStore();
   const { isDark, toggle } = useTheme();
-  const o = overall(progress);
-  const cta = o.next ? { to: `/lesson/${o.next.l.id}`, label: o.started ? "Continue learning" : "Start learning" } : { to: "/#content", label: "View curriculum" };
+  const t = useTrack();
+  const o = t.overall(progress);
+  const cta = o.next ? { to: t.lessonHref(o.next.l.id), label: o.started ? "Continue learning" : "Start learning" } : { to: t.hash("content"), label: "View curriculum" };
+  const other = t.id === ENGINEER.id ? AGENTS : ENGINEER;
 
   return (
     <header className="nav">
       <div className="wrap">
-        <Link className="logo" to="/"><span className="mark" aria-hidden="true" />Delegate</Link>
+        <Link className="logo" to={t.home}><span className="mark" aria-hidden="true" />Delegate{t.id === ENGINEER.id && <small className="trk">AI engineer</small>}</Link>
         <nav aria-label="Main">
-          <Link to="/#months">Course</Link>
-          <Link to="/#method">How it works</Link>
-          <Link to="/#content">Curriculum</Link>
-          <Link to="/#log">Failure log</Link>
+          <Link to={t.hash("months")}>Course</Link>
+          <Link to={t.hash("method")}>How it works</Link>
+          <Link to={t.hash("content")}>Curriculum</Link>
+          <Link to={other.home}>{other.id === ENGINEER.id ? "AI engineer" : "Agent course"}</Link>
         </nav>
         <div className="right">
           <button className="iconbtn" onClick={toggle} aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}>

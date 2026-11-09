@@ -5,7 +5,10 @@ const V: Record<string, Resource> = {
   karpathyIntro: {title:"Intro to Large Language Models — Andrej Karpathy", len:"1 hr", url:"https://www.youtube.com/watch?v=zjkBMFhNj_g"},
   karpathyDeep: {title:"Deep Dive into LLMs like ChatGPT — Andrej Karpathy", len:"3.5 hr", url:"https://www.youtube.com/watch?v=7xTGNNLPyMI"},
   briefly: {title:"Large Language Models explained briefly — 3Blue1Brown", len:"8 min", url:"https://www.youtube.com/watch?v=LPZh9BOjkQs"},
-  transformers: {title:"How transformers and attention work (talk) — 3Blue1Brown", len:"1 hr", url:"https://www.youtube.com/watch?v=KJtZARuO3JY"}
+  transformers: {title:"How transformers and attention work (talk) — 3Blue1Brown", len:"1 hr", url:"https://www.youtube.com/watch?v=KJtZARuO3JY"},
+  contextWindow: {title:"What is a context window? — IBM Technology", len:"11 min", url:"https://www.youtube.com/watch?v=-QVoIxEpFkM"},
+  hallucinate: {title:"Why large language models hallucinate — IBM Technology", len:"9 min", url:"https://www.youtube.com/watch?v=cfqtFvWOfg0"},
+  temperature: {title:"LLM temperature explained in 5 minutes — KodeKloud", len:"5 min", url:"https://www.youtube.com/watch?v=IWSutLJbURU"}
 };
 const R: Record<string, Resource> = {
   tokens: {title:"What are tokens and how to count them — OpenAI Help", url:"https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them"},
@@ -70,7 +73,7 @@ export const week1: Lesson[] = [
 </ol>
 <h3>The habit to build</h3>
 <p>Start thinking of every interaction as "what is in the window right now?" When a model gets something wrong, ask: did it actually have the information it needed? Was the important part clear, or buried? Most failures you'll meet in this course come down to the window.</p>`,
-  watch:[V.karpathyIntro],
+  watch:[V.contextWindow],
   read:[R.tokens],
   exercise:`<p>Take a paragraph of English, a short piece of code, and a sentence in Yoruba, Igbo, Hausa or Pidgin. Use any online tokenizer (search "LLM tokenizer") to count the tokens in each. Write down the tokens-per-word ratio for each and one sentence on what it means for cost if you built a product for Nigerian users.</p>`,
   quiz:[
@@ -95,7 +98,7 @@ export const week1: Lesson[] = [
 <p>The professional habit is to run things several times and look at the spread. That habit grows into <em>evals</em> in Month 3, where you'll run a prompt against 30+ test cases and measure a success rate instead of trusting a single run.</p>
 <h3>You often can't set it</h3>
 <p>Chat apps choose the sampling settings for you. Agents and newer reasoning models often fix them too. You'll get full control when you call models through the API, which you'll do in Month 3. For now, the lesson is conceptual: variation is built in, so judge on several runs.</p>`,
-  watch:[V.briefly],
+  watch:[V.temperature],
   read:[],
   exercise:`<p>This is the Week 1 build. In a chat app, ask the same open question five times in fresh chats (for example, "Suggest a name and one-line pitch for a Lagos logistics startup"). Then ask a factual question five times ("What is 17% of 2,350?"). Log all ten answers in a table. Write three sentences on where variation helped and where it would be dangerous.</p>`,
   quiz:[
@@ -125,7 +128,7 @@ export const week1: Lesson[] = [
 </ol>
 <h3>The mindset</h3>
 <p>Treat model output like work from a fast, well-read new hire who never admits uncertainty unless told it's allowed. You wouldn't send their first draft to a client unchecked. But you also wouldn't refuse to use them. The skill this whole course builds is making checking cheap: tests, sources, evals, review. That is what lets you trust agents with real work.</p>`,
-  watch:[V.karpathyIntro],
+  watch:[V.hallucinate],
   read:[R.halluc],
   exercise:`<p>Try to make a model hallucinate, then fix it. (1) Ask a chat model for three academic papers on mobile money adoption in Nigeria, with authors, years and links. Check every one. (2) Ask again, but add: "Only include papers you are confident exist. If unsure, say so." (3) If the app has web search, ask a third time with search on. Record how many real vs fake results each version gave. Add the worst case to your failure log.</p>`,
   quiz:[

@@ -7,6 +7,8 @@ export interface Env {
   LEARNERS: R2Bucket;
   /** optional: set with `wrangler pages secret put ADMIN_KEY` to enable the subscriber export */
   ADMIN_KEY?: string;
+  /** service binding to the delegate-mailer Worker (workers/mailer), which emails feedback via Cloudflare Email Routing */
+  MAILER?: Fetcher;
 }
 
 export type LearnerData = {

@@ -53,7 +53,7 @@ svg.i{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .nav nav a:hover{color:var(--ink)}
 .nav .right{margin-left:auto;display:flex;gap:10px;align-items:center}
 .iconbtn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--ink)}
-@media (max-width:820px){.nav nav{display:none}}
+@media (max-width:1040px){.nav nav{display:none}}
 @media (max-width:480px){#navCta{display:none}}
 
 /* hero */
@@ -495,3 +495,109 @@ footer .wrap{align-items:flex-start}
 .foot-main{display:flex;flex-direction:column;gap:6px}
 .foot-by a{color:var(--ink);font-weight:500;text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--brand) 60%,transparent)}
 .foot-by a:hover{color:var(--brand)}
+
+/* Tracks and lecture format */
+.tracks{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tracks a{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);text-decoration:none;min-width:0;flex:1 1 200px}
+.tracks a b{font-size:.95rem}
+.tracks a small{color:var(--ink-2);font-size:.8rem}
+.tracks a.on{border-color:var(--brand);box-shadow:inset 0 0 0 1px var(--brand)}
+.tracks a:hover{border-color:var(--brand)}
+.logo .trk{font-size:.72rem;font-weight:700;color:var(--brand);background:var(--brand-soft);padding:2px 8px;border-radius:999px;letter-spacing:0}
+.src{display:block;font-size:.78rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--brand);margin-bottom:2px}
+.vcap .src{margin-bottom:4px}
+.vlist .v .src{margin-top:8px}
+.vlist p a{color:var(--ink);text-decoration:none}
+.vlist p a:hover{color:var(--brand)}
+.linkout{display:block;position:relative;color:#fff;text-decoration:none}
+.linkout img{width:100%;height:100%;object-fit:cover;display:block;opacity:.55}
+.linkout .lo{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:8px;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.55))}
+.linkout .lo small{font-size:.75rem;opacity:.85}
+.linkout:hover img{opacity:.75}
+.goals ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.goals li{display:flex;gap:10px;align-items:flex-start}
+.goals li svg{color:var(--mint);flex:none;margin-top:3px}
+.goals .pre{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink-2);font-size:.95rem}
+.pintro{margin:-6px 0 14px}
+.probs{margin:0;padding-left:1.4em;display:grid;gap:22px}
+.probs>li::marker{font-weight:700;color:var(--coral)}
+.probs .prose p{margin:0 0 8px}
+.probs details{border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;background:var(--bg)}
+.probs summary{cursor:pointer;font-weight:700;font-size:.92rem;color:var(--brand)}
+.probs .sol{margin-top:10px}
+.prose .katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
+.prose .katex{font-size:1.06em}
+@media (max-width:600px){.card{padding:22px 18px}.tracks a{flex-basis:100%}}
+.nav nav a{white-space:nowrap}
+.logo .trk{white-space:nowrap}
+@media (max-width:520px){.logo .trk{display:none}}
+.prose .callout,.ex .callout{margin:22px 0 4px;padding:14px 16px;border-radius:var(--r);background:var(--brand-soft);border-left:4px solid var(--brand);font-size:.95rem}
+.prose .callout code{background:var(--surface)}
+/* Go deep (optional depth after the quiz) */
+details.deep{padding:0;overflow:hidden;border:1px dashed var(--sky)}
+details.deep>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:22px 26px}
+details.deep>summary::-webkit-details-marker{display:none}
+details.deep>summary .ico{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;color:#fff;background:var(--c);flex:none}
+details.deep>summary div{flex:1;min-width:0}
+details.deep>summary b{display:block;font-size:1.08rem}
+details.deep>summary small{display:block;color:var(--ink-2);font-size:.88rem;margin-top:3px}
+details.deep>summary .chev{transition:transform .2s;flex:none}
+details.deep[open]>summary .chev{transform:rotate(180deg)}
+details.deep .deepbody{padding:0 26px 26px;border-top:1px solid var(--line)}
+details.deep .deepbody>p.muted{margin:16px 0 4px}
+details.deep .deepbody h3{font-size:1.1rem;margin:24px 0 12px}
+details.deep .deepbody>.btn{margin-top:22px}
+.deepmark{font-style:normal;font-size:.68rem;font-weight:700;color:var(--sky);border:1px solid var(--sky);border-radius:999px;padding:0 7px;margin-left:8px;vertical-align:middle}
+@media (max-width:600px){details.deep>summary{padding:18px}details.deep .deepbody{padding:0 18px 20px}}
+/* Go deep invitation: inverted (dark text on a light bar) in both themes */
+details.deep{border:1px solid #DDE5E0}
+details.deep>summary{background:#F4F7F5;color:#13241D}
+details.deep>summary small{color:#4B5D55}
+details.deep>summary .chev{color:#13241D}
+details.deep>summary:hover{background:#FFFFFF}
+details.deep[open]>summary{border-bottom:1px solid #DDE5E0}
+details.deep .tip{font-size:.92rem;color:var(--ink-2);margin:-4px 0 14px;max-width:70ch}
+
+/* Quick feedback: a tab on every page, a sheet (bottom sheet on phones), and /feedback */
+.fb-tab{position:fixed;left:20px;bottom:20px;z-index:40;display:flex;align-items:center;gap:7px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:10px 16px 10px 13px;font:700 .92rem var(--font);cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.fb-tab:hover{border-color:var(--brand)}
+.fb-tab svg{width:18px;height:18px;color:var(--brand)}
+.fb-scrim{position:fixed;inset:0;z-index:44;background:rgba(0,0,0,.35)}
+.fb-sheet{position:fixed;left:20px;bottom:78px;z-index:45;width:400px;max-height:calc(100dvh - 100px);overflow:auto;background:var(--surface);color:var(--ink);border-radius:var(--r-lg);box-shadow:0 24px 60px rgba(0,0,0,.3);padding:20px 20px 14px}
+.fb-head{position:relative;padding-right:40px;margin-bottom:12px}
+.fb-head h2{font-size:1.25rem;margin:0}
+.fb-head p{margin:4px 0 0;color:var(--ink-2);font-size:.9rem}
+.fb-x{position:absolute;right:-4px;top:-4px;width:36px;height:36px;border-radius:50%;border:0;background:var(--bg);color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.fb-form{display:flex;flex-direction:column;gap:8px}
+.fb-form label{font-weight:700;font-size:.92rem;margin-top:6px}
+.fb-form .opt{font-weight:400;color:var(--ink-2)}
+.fb-form textarea,.fb-form input[type=email]{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;resize:vertical}
+.fb-form textarea:focus,.fb-form input[type=email]:focus{outline:none;border-color:var(--brand)}
+.fb-faces{border:0;margin:0;padding:0}
+.fb-faces legend{font-weight:700;font-size:.98rem;margin-bottom:8px;padding:0}
+.fb-faces>div{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.fb-faces button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px;border-radius:var(--r-sm);border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;min-height:64px;font:inherit}
+.fb-faces button span{font-size:1.7rem;line-height:1}
+.fb-faces button small{font-size:.7rem;color:var(--ink-2);white-space:nowrap}
+.fb-faces button:hover{border-color:var(--brand)}
+.fb-faces button[aria-pressed="true"]{border-color:var(--brand);background:var(--brand-soft);box-shadow:inset 0 0 0 1px var(--brand)}
+.fb-send{margin-top:8px;width:100%;justify-content:center}
+.fb-form .err{color:var(--coral);margin:0;font-size:.9rem}
+.fb-done{text-align:center;padding:10px 0 6px}
+.fb-done h3{margin:10px 0 4px}
+.fb-done p{color:var(--ink-2);margin:0 0 14px}
+.fb-ok{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--brand);color:var(--brand-ink)}
+.fb-link{text-align:center;font-size:.85rem;margin:10px 0 0}
+.fb-link a{color:var(--ink-2)}
+.fb-page{padding:40px 0 80px}
+.fb-page .card{max-width:560px;margin:0 auto}
+.fb-page h1{font-size:1.8rem;margin:0 0 6px}
+.fb-page .card>.muted{margin:0 0 18px}
+@media (max-width:520px){
+  .fb-tab{left:12px;bottom:12px;padding:10px 14px 10px 12px}
+  .fb-sheet{left:0;right:0;bottom:0;width:auto;max-height:92dvh;border-radius:20px 20px 0 0;padding:18px 16px calc(14px + env(safe-area-inset-bottom))}
+  .fb-faces button small{display:none}
+  .fb-faces button{min-height:56px}
+  .fb-page{padding:20px 0 90px}
+}
+.fb-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}

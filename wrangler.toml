@@ -6,3 +6,9 @@ compatibility_date = "2026-10-01"
 [[r2_buckets]]
 binding = "LEARNERS"
 bucket_name = "delegate-learners"
+
+# Feedback emails: the delegate-mailer Worker (workers/mailer) sends them with Cloudflare Email Routing.
+# Deploy it first: cd workers/mailer && npx wrangler deploy
+[[services]]
+binding = "MAILER"
+service = "delegate-mailer"
