@@ -531,3 +531,5 @@ footer .wrap{align-items:flex-start}
 .nav nav a{white-space:nowrap}
 .logo .trk{white-space:nowrap}
 @media (max-width:520px){.logo .trk{display:none}}
+.prose .callout,.ex .callout{margin:22px 0 4px;padding:14px 16px;border-radius:var(--r);background:var(--brand-soft);border-left:4px solid var(--brand);font-size:.95rem}
+.prose .callout code{background:var(--surface)}

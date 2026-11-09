@@ -148,7 +148,20 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
     a:h`<p>Evidence rather than adjectives: a link to the running app, the repository, the share of code the agent wrote, two or three real failures from your log and how you fixed them, and what you would do differently next time.</p>`}
   ]},
  "10-1": {
-  objectives: ["Decide between hosted and self-hosted models for a given product","Check a model's licence for commercial use"],
+  objectives: ["Decide between hosted and self-hosted models for a given product","Check a model's licence for commercial use","Check what hardware your own computer has for running models"],
+  prereqs: "<p>Week 9 (calling a model from code). No hardware knowledge needed: the notes below explain every term and show you how to check your own machine.</p>",
+  notes: `
+<h3>Words you'll meet this week</h3>
+<ul>
+<li><b>Parameters (7B, 70B…):</b> the numbers inside a model that were learned in training. "7B" means 7 billion. More parameters usually means more capable, but also more memory and slower.</li>
+<li><b>GPU:</b> a graphics chip that does the maths models need much faster than the main processor (CPU). <b>VRAM</b> is the GPU's own memory, and it's usually what decides which models fit.</li>
+<li><b>Unified memory:</b> on Apple Silicon Macs the CPU and GPU share one pool of memory, so a 16 GB Mac can use most of it for a model.</li>
+<li><b>Inference:</b> running a trained model to get answers (as opposed to training it).</li>
+<li><b>Quantisation:</b> storing the model's numbers with fewer bits so it needs less memory, at a small cost in quality (lesson 10.3).</li>
+</ul>
+<h3>Check your own machine (two minutes)</h3>
+<p><b>Windows:</b> open Task Manager → Performance. Click "GPU" if it's listed and note "Dedicated GPU memory"; click "Memory" for your RAM. <b>Mac:</b> Apple menu → About This Mac shows the chip (M1, M2…) and memory. Write both numbers down; lesson 10.3 uses them.</p>
+<div class="callout"><b>No GPU, or an older laptop?</b> You can still do every exercise this week. Small models (1–4B parameters) run on an ordinary CPU with 8 GB of RAM: slowly, but they work, and the skills are identical. If you want more speed for free, some notebook services, such as Google Colab, offer a free GPU for limited sessions.</div>`,
   problems: [
    {q:h`<p>A Lagos hospital wants triage suggestions on patient notes and says the data must not leave its servers. A startup wants a prototype chatbot by Friday. Which should self-host?</p>`,
     a:h`<p>The hospital: its data-residency requirement rules out sending notes to a hosted API unless a contract and region meet the requirement, so an open model on its own hardware is the safe default. The startup should use a hosted API: it's faster to ship and cheaper at low volume, and it can switch later.</p>`},
@@ -157,6 +170,9 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "10-2": {
   objectives: ["Read a model card and a GGUF file name","Choose safe file formats"],
+  prereqs: "<p>Lesson 10.1. A free Hugging Face account is useful but not required to browse models.</p>",
+  notes: `
+<div class="callout"><b>Overwhelmed by Hugging Face?</b> It hosts over a million models, and most aren't for you. Filter by task ("Text Generation"), sort by downloads, and stick to the big families named in lesson 10.1, in their <em>Instruct</em> versions. For running locally this week, you only need to recognise one thing: a GGUF file whose size fits your memory.</div>`,
   problems: [
    {q:h`<p>Decode the file name <code>Qwen2.5-7B-Instruct-Q4_K_M.gguf</code>.</p>`,
     a:h`<p>The Qwen 2.5 family, 7 billion parameters, the instruction-tuned (chat) variant, quantised to about 4 bits per weight with the K-quant "medium" mix, in the GGUF format used by llama.cpp and Ollama.</p>`},
@@ -165,6 +181,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "10-3": {
   objectives: ["Estimate the memory needed for a model at a given precision","Compute the KV-cache size for a context length","Choose a quantisation level for your hardware"],
+  prereqs: "<p>Lesson 10.1, and the memory numbers you noted for your own machine. The maths here is multiplication: if the formulas look scary, read the worked problems first.</p>",
   lectures: [U.quant],
   notes: h`
 <h3>The two numbers that decide whether it fits</h3>
@@ -172,7 +189,9 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
 \[\text{weights} \approx N \times \frac{b}{8} \ \text{bytes}\]
 <p>On top of that, every token in the context stores keys and values for each layer (the KV cache):</p>
 \[\text{KV per token} = 2 \times L \times H_{kv} \times d_{head} \times \text{bytes per value}\]
-<p>where \(L\) is the number of layers, \(H_{kv}\) the number of key/value heads and \(d_{head}\) the head dimension.</p>`,
+<p>where \(L\) is the number of layers, \(H_{kv}\) the number of key/value heads and \(d_{head}\) the head dimension.</p>
+<p>You don't need to memorise these. The practical rule: <b>at 4-bit, a model needs a bit more than half its parameter count in gigabytes</b> (an 8B model needs about 5 GB), plus room for the context. Leave a couple of gigabytes for your operating system and other apps.</p>
+<div class="callout"><b>Quick guide by machine:</b> 8 GB RAM, no GPU: 1–4B models at 4-bit. 16 GB RAM or a 6–8 GB GPU: 7–8B models at 4-bit. 32 GB+ or a 16–24 GB GPU: 14–32B models. If a model is painfully slow or crashes, step down one size before trying anything else.</div>`,
   problems: [
    {q:h`<p>How much memory do the weights of an 8-billion-parameter model need at 16-bit and at 4-bit precision?</p>`,
     a:h`<p>16-bit: \(8 \times 10^9 \times 2 = 16\) GB. 4-bit: \(8 \times 10^9 \times 0.5 = 4\) GB, plus some overhead (quantisation scales and runtime buffers), so plan for about 5 GB. This is why a 4-bit 8B model runs on a laptop with 8 GB of VRAM or 16 GB of unified memory.</p>`},
@@ -181,7 +200,10 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "10-4": {
   objectives: ["Run a model locally and call it from code","Avoid the common local-serving mistakes","Know when to move from Ollama to vLLM"],
+  prereqs: "<p>Lessons 10.1–10.3 and lesson 9.1 (calling a model from Python).</p>",
   lectures: [U.cs336_10],
+  notes: `
+<div class="callout"><b>Stuck?</b> <code>ollama: command not found</code> or "not recognized": the install didn't add Ollama to your PATH, so restart the terminal (or the computer, on Windows). "Connection refused" on <code>localhost:11434</code>: the Ollama app or <code>ollama serve</code> isn't running. Very slow replies or an out-of-memory error: the model is too big for your machine, so pull a smaller one (lesson 10.3's quick guide). The first reply after starting is always slower, because the model is loading into memory.</div>`,
   problems: [
    {q:h`<p>Your 20,000-token prompt to a local model gets answers that ignore the start of the document. What's the likely cause?</p>`,
     a:h`<p>The runtime's context length is set lower than your prompt, so the start was cut off. In Ollama, raise <code>num_ctx</code> (in the request options or a Modelfile), and check you have memory for the larger KV cache.</p>`},
@@ -190,6 +212,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "10-5": {
   objectives: ["Decide whether a problem needs fine-tuning, RAG or a better prompt","Compute how many parameters LoRA trains","Describe the LoRA workflow and its common failures"],
+  prereqs: "<p>Lessons 10.1–10.4. Fine-tuning is optional this week: understanding <em>when</em> to do it matters more than doing it. If you do try it, a free GPU notebook is enough for a small model.</p>",
   lectures: [U.cs224n_post],
   notes: h`
 <h3>LoRA in one equation</h3>

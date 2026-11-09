@@ -1,6 +1,8 @@
 import { useLocation } from "react-router-dom";
 import { LINKS, MONTHS } from "./course";
 import { week1, week2, week3, week4 } from "./month1";
+import { week5, week6, week7, week8 } from "./month2";
+import { week9 } from "./week9";
 import { week10 } from "./month3";
 import { UPGRADES } from "./lectures";
 import { E_LINKS, E_MONTHS } from "./engineer/course";
@@ -89,7 +91,7 @@ function makeTrack(id: string, base: string, prefix: string, name: string, month
 export type Track = ReturnType<typeof makeTrack>;
 
 export const AGENTS = makeTrack("agents", "", "", "AI agent user", MONTHS, LINKS,
-  { 1: week1, 2: week2, 3: week3, 4: week4, 10: week10 },
+  { 1: week1, 2: week2, 3: week3, 4: week4, 5: week5, 6: week6, 7: week7, 8: week8, 9: week9, 10: week10 },
   {
     label: "Agent user track",
     pill: "Self-paced, 24 weeks, free",
@@ -104,7 +106,7 @@ export const AGENTS = makeTrack("agents", "", "", "AI agent user", MONTHS, LINKS
       "Build your own agent harness and MCP servers",
       "Run agents in production that work without you watching",
     ],
-    curriculum: "Lessons are live for Month 1 and Week 10; the rest are on the way. Every week's build and tasks are ready now.",
+    curriculum: "Lessons are live for weeks 1–10; the rest are on the way. Every week's build and tasks are ready now.",
   });
 
 export const ENGINEER = makeTrack("engineer", "/engineer", "e", "AI engineer", E_MONTHS, E_LINKS, E_LESSONS,
