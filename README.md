@@ -179,19 +179,21 @@ wrangler.toml                Pages config and the R2 binding
 ## Feedback emails
 
 Learners can send quick feedback from the **Feedback** button on every page, or at `/feedback`.
-Each one is saved to R2 at `feedback/<timestamp>-<id>.json` and, once Resend is set up, emailed to `learn@isuxtech.com`.
+Each one is saved to R2 at `feedback/<timestamp>-<id>.json` and emailed to you by a tiny Worker,
+`workers/mailer` (`delegate-mailer`), using Cloudflare Email Routing. Pages Functions can't send email
+themselves, so the site calls the Worker through a service binding (`MAILER` in `wrangler.toml`).
+Sending to your own verified address is free on the Workers Free plan.
 
-One-time setup (about 10 minutes):
+One-time setup:
 
-1. Create a free account at resend.com.
-2. In Resend, go to **Domains → Add domain** and enter `isuxtech.com`. Resend shows a few DNS records
-   (they use a `send.` subdomain and a `resend._domainkey` record, so they don't clash with Cloudflare Email Routing's MX records).
-3. Add those records wherever `isuxtech.com`'s DNS is managed (Cloudflare if Email Routing is set up there), then click **Verify** in Resend.
-4. In Resend, create an API key with "Sending access".
-5. Save it as a secret on the Pages project:
-   `npx wrangler pages secret put RESEND_API_KEY --project-name delegate`
-6. Redeploy (`npm run deploy`) and send a test from `/feedback`.
+1. In the Cloudflare dashboard, open **Email → Email Routing → Destination addresses** for isuxtech.com and
+   check which inbox is **verified**. The Worker can only send to a verified destination address.
+2. In `workers/mailer/wrangler.toml`, set `MAIL_TO` to that verified address (it's `learn@isuxtech.com` now;
+   if learn@ is a custom address that forwards to another inbox, put that inbox here). `MAIL_FROM` can be any
+   address on isuxtech.com.
+3. Deploy the Worker once: `npm run deploy:mailer` (needs `wrangler login`).
+4. Redeploy the site: `npm run deploy`. Then send a test from `/feedback`.
 
-Optional settings (Pages environment variables): `FEEDBACK_TO` (default `learn@isuxtech.com`) and
-`FEEDBACK_FROM` (default `Delegate feedback <feedback@isuxtech.com>`; must be on the verified domain).
-Until the key is set, feedback is still saved to R2, just not emailed.
+Local testing: run `npx wrangler dev --port 8790` in `workers/mailer`, and `npm run pages:dev` in another
+terminal. Emails aren't really sent locally; wrangler saves them under `workers/mailer/.wrangler/tmp/email/`.
+If the Worker isn't running or sending fails, feedback is still saved and the learner still sees "Thank you".

@@ -1,0 +1,20 @@
+# Tiny private Worker that sends feedback emails with Cloudflare Email Routing.
+# Pages Functions can't use the send_email binding directly, so the Pages site calls this Worker
+# through a service binding (MAILER in ../../wrangler.toml). It has no public URL.
+name = "delegate-mailer"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+workers_dev = false
+preview_urls = false
+
+[vars]
+# Sender: any address on a domain with Email Routing enabled.
+MAIL_FROM = "feedback@isuxtech.com"
+MAIL_FROM_NAME = "Delegate feedback"
+# Recipient: must be a VERIFIED destination address in Email Routing (Email → Email Routing → Destination addresses).
+# Sending to verified destinations is free on the Workers Free plan. If learn@isuxtech.com is a custom address that
+# forwards to another inbox, put that inbox here instead.
+MAIL_TO = "learn@isuxtech.com"
+
+[[send_email]]
+name = "EMAIL"

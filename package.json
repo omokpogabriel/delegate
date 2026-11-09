@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "typecheck:functions": "tsc -p functions/tsconfig.json --noEmit",
+    "typecheck:functions": "tsc -p functions/tsconfig.json --noEmit && tsc -p workers/mailer/tsconfig.json --noEmit",
+    "deploy:mailer": "cd workers/mailer && wrangler deploy",
     "pages:dev": "npm run build && wrangler pages dev",
     "deploy": "npm run build && wrangler pages deploy"
   },

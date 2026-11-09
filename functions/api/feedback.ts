@@ -3,13 +3,11 @@ import { type Env, cleanText, error, json, normEmail, randomHex, readBody, sha25
 /**
  * POST /api/feedback → quick course feedback.
  * 1. Always saved to R2 at feedback/<timestamp>-<id>.json, so nothing is lost if email fails.
- * 2. Emailed to FEEDBACK_TO (default learn@isuxtech.com) through Resend, when RESEND_API_KEY is set.
- *    Setup: see "Feedback emails" in README.md.
+ * 2. Emailed to learn@isuxtech.com by the delegate-mailer Worker (Cloudflare Email Routing), via the MAILER
+ *    service binding. Setup: see "Feedback emails" in README.md.
  */
 
 const MAX_PER_HOUR = 10; // per visitor IP
-const DEFAULT_TO = "learn@isuxtech.com";
-const DEFAULT_FROM = "Delegate feedback <feedback@isuxtech.com>";
 const RATINGS = ["", "Very poor", "Poor", "OK", "Good", "Excellent"];
 
 type Body = { rating?: number; message?: string; email?: string; page?: string; track?: string; website?: string };
@@ -55,9 +53,12 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
-/** Sends one email through Resend. Returns false (and never throws) if it isn't configured or fails. */
+/**
+ * Emails the feedback through the delegate-mailer Worker (Cloudflare Email Routing, see workers/mailer).
+ * Returns false, and never throws, if the binding isn't there (e.g. local dev) or sending fails.
+ */
 async function sendEmail(env: Env, fb: Feedback): Promise<boolean> {
-  if (!env.RESEND_API_KEY) return false;
+  if (!env.MAILER) return false;
   const stars = fb.rating ? `${"★".repeat(fb.rating)}${"☆".repeat(5 - fb.rating)} ${RATINGS[fb.rating]}` : "No rating";
   const lines = [
     `Rating: ${stars}`,
@@ -68,13 +69,13 @@ async function sendEmail(env: Env, fb: Feedback): Promise<boolean> {
     fb.message || "(no message)",
   ];
   try {
-    const res = await fetch("https://api.resend.com/emails", {
+    const res = await env.MAILER.fetch("https://mailer/send", {
       method: "POST",
-      headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
+      signal: AbortSignal.timeout(8000), // never keep the learner waiting on email
+
+      headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        from: env.FEEDBACK_FROM || DEFAULT_FROM,
-        to: [env.FEEDBACK_TO || DEFAULT_TO],
-        ...(fb.email ? { reply_to: fb.email } : {}),
+        ...(fb.email ? { replyTo: fb.email } : {}),
         subject: `Delegate feedback: ${fb.rating ? `${fb.rating}/5` : "comment"}${fb.message ? ` — ${fb.message.slice(0, 60)}` : ""}`,
         text: lines.join("\n"),
         html: `<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.5">${lines.slice(0, 4).map((l) => `<div>${esc(l)}</div>`).join("")}<p style="white-space:pre-wrap;border-left:3px solid #3CC1A0;padding-left:12px">${esc(fb.message || "(no message)")}</p></div>`,
