@@ -58,7 +58,7 @@ function Hero() {
           </div>
           <div className="stats">
             <div><b>24</b><span>weeks</span></div>
-            <div><b>{t.all.length}</b><span>lectures live</span></div>
+            <div><b>{t.all.length}</b><span>{t.copy.unit}s live</span></div>
             <div><b>6</b><span>practical exams</span></div>
             <div><b>1</b><span>capstone</span></div>
           </div>
@@ -67,22 +67,22 @@ function Hero() {
           <div className="dots" aria-hidden="true" />
           <div className="bgshape" aria-hidden="true" />
           <div className="tri" aria-hidden="true" />
-          <div className="chip c2"><span className="ico"><Icon name="play" size={16} /></span>Stanford, MIT and Berkeley lectures</div>
+          <div className="chip c2"><span className="ico"><Icon name={t.id === "engineer" ? "play" : "quiz"} size={16} /></span>{t.copy.chips[0]}</div>
           <div className="pcard">
             <div className="top">
               <div className="ring">
                 <svg viewBox="0 0 80 80"><circle className="track" cx="40" cy="40" r="34" /><circle className="val" cx="40" cy="40" r="34" strokeDasharray={C} strokeDashoffset={C * (1 - o.pct / 100)} /></svg>
                 <b>{o.pct}%</b>
               </div>
-              <div><h3>Your progress</h3><p className="muted">{o.done} of {o.total} lectures and tasks</p></div>
+              <div><h3>Your progress</h3><p className="muted">{o.done} of {o.total} {t.copy.unit}s and tasks</p></div>
             </div>
             <div className="next">
-              <small>{o.next ? `Up next: lecture ${o.next.w}.${o.next.i + 1}` : "Up next"}</small>
-              <span>{o.next ? o.next.l.title : "New lectures are on the way. Keep going with the weekly builds."}</span>
+              <small>{o.next ? `Up next: ${t.copy.unit} ${o.next.w}.${o.next.i + 1}` : "Up next"}</small>
+              <span>{o.next ? o.next.l.title : `New ${t.copy.unit}s are on the way. Keep going with the weekly builds.`}</span>
             </div>
-            <Link className="btn btn-primary btn-sm" to={href}>{!o.next ? "View curriculum" : o.started ? "Continue" : "Start lecture"}</Link>
+            <Link className="btn btn-primary btn-sm" to={href}>{!o.next ? "View curriculum" : o.started ? "Continue" : `Start ${t.copy.unit}`}</Link>
           </div>
-          <div className="chip c1"><span className="ico"><Icon name={profile?.token ? "cloud" : "pen"} size={16} /></span>{profile?.token ? "Progress backed up online" : "Problem sets with worked solutions"}</div>
+          <div className="chip c1"><span className="ico"><Icon name={profile?.token ? "cloud" : t.id === "engineer" ? "pen" : "hammer"} size={16} /></span>{profile?.token ? "Progress backed up online" : t.copy.chips[1]}</div>
         </div>
       </div>
     </section>
@@ -104,7 +104,7 @@ function Months() {
             const p = Math.round((d / n) * 100);
             return (
               <Link key={mo} className="mcard" to={t.hash(`m${mo}`)} style={{ ["--c" as string]: MONTH_COLORS[mi] }}>
-                <div className="thumb"><span className="tag">{nL ? `${nL} lectures live` : "Lectures coming"}</span><b>{mo}</b></div>
+                <div className="thumb"><span className="tag">{nL ? `${nL} ${t.copy.unit}s live` : `${t.copy.unit === "lesson" ? "Lessons" : "Lectures"} coming`}</span><b>{mo}</b></div>
                 <div className="mbody">
                   <small>Month {mo}</small>
                   <h3>{m.t}</h3>
@@ -124,16 +124,11 @@ function Months() {
 
 function Method() {
   const t = useTrack();
-  const feats = [
-    { c: "var(--brand)", i: "play", t: "University lectures", d: "Each week is anchored in a real lecture from Stanford, MIT, Harvard or Berkeley, chosen and checked for this course." },
-    { c: "var(--sky)", i: "doc", t: "Lecture notes", d: "Rigorous notes with learning objectives, worked examples and the maths written out, so you can study without the video." },
-    { c: "var(--coral)", i: "pen", t: "Problem sets", d: "Problems at the end of every lecture, each with a worked solution to check yourself against." },
-    { c: "var(--lilac)", i: "ship", t: "Exams you ship", d: "Every month ends with a practical exam. You pass by building something, not by answering questions." },
-  ];
+  const feats = t.copy.feats;
   return (
     <section className="block" id="method" style={{ background: "var(--surface)" }}>
       <div className="wrap">
-        <div className="shead"><div><h2>How the course works</h2><p>About 10–12 hours a week: the lecture and notes early in the week, the problem set and build midweek, and a short write-up at the end.</p></div></div>
+        <div className="shead"><div><h2>How the course works</h2><p>{t.id === "engineer" ? "About 10–12 hours a week: the lecture and notes early in the week, the problem set and build midweek, and a short write-up at the end." : "About 10–12 hours a week. Concepts early in the week, building midweek, review and a short write-up at the end."}</p></div></div>
         <div className="features">
           {feats.map((f) => (
             <div className="feat" key={f.t}><div className="ico" style={{ ["--c" as string]: f.c }}><Icon name={f.i} /></div><h3>{f.t}</h3><p>{f.d}</p></div>
@@ -158,7 +153,7 @@ function Curriculum() {
         <div className="shead">
           <div><h2>Curriculum</h2><p>{t.copy.curriculum}</p></div>
           <div className="content-sum">
-            <span>6 months, 24 weeks, {t.all.length} lectures live</span>
+            <span>6 months, 24 weeks, {t.all.length} {t.copy.unit}s live</span>
             <button className="linkbtn" onClick={() => setAllOpen((v) => !v)}>{allOpen ? "Collapse all weeks" : "Expand all weeks"}</button>
           </div>
         </div>
@@ -177,19 +172,19 @@ function Curriculum() {
                       <summary>
                         <Icon name="chev" className="i chev" />
                         <span className="wt">Week {wn}: {w[0]}</span>
-                        <span className="wm">{ls.length ? `${ls.length} lectures, ${t.lessonMins(wn)} min · ` : ""}{d === n ? <span className="donepill">Complete</span> : `${d}/${n} done`}</span>
+                        <span className="wm">{ls.length ? `${ls.length} ${t.copy.unit}s, ${t.lessonMins(wn)} min · ` : ""}{d === n ? <span className="donepill">Complete</span> : `${d}/${n} done`}</span>
                       </summary>
                       <ul className="rows">
                         {ls.length ? ls.map((l, li) => (
                           <li key={l.id} className={progress[t.lessonKey(l.id)] ? "done" : ""}>
                             <Link className="row" to={t.lessonHref(l.id)}>
                               <span className="ic"><Icon name={hasVideo(l) ? "play" : "doc"} /></span>
-                              <span className="rt">{wn}.{li + 1} {l.title}</span>
+                              <span className="rt">{wn}.{li + 1} {l.title}{progress[t.deepKey(l.id)] && <em className="deepmark">Deep</em>}</span>
                               <span className="rm">{l.mins} min</span>
                             </Link>
                             <Check />
                           </li>
-                        )) : <li className="soon"><Icon name="clock" />Lecture notes for this week are being written. The lecture is named in the tasks below.</li>}
+                        )) : <li className="soon"><Icon name="clock" />{t.id === "engineer" ? "Lecture notes for this week are being written. The lecture is named in the tasks below." : "Lessons for this week are in production."}</li>}
                       </ul>
                       <div className="buildrow"><b>Build:</b> {w[1]}</div>
                       <div className="subhead">Tasks</div>

@@ -5,7 +5,7 @@ import { useStore } from "../lib/store";
 import { withMath } from "../lib/math";
 import {
   hasVideo, useTrack, ytId,
-  type LessonRef, type Problem, type QuizQuestion, type Resource, type Track,
+  type Lesson, type LessonRef, type Problem, type QuizQuestion, type Resource, type Track,
 } from "../content";
 
 const Embed = ({ id, title }: { id: string; title: string }) => (
@@ -15,6 +15,7 @@ const Embed = ({ id, title }: { id: string; title: string }) => (
 
 type Vid = Resource & { id: string };
 const canEmbed = (v: Resource) => v.embed !== false;
+const vidsOf = (rs: Resource[]) => rs.map((v) => ({ ...v, id: ytId(v.url) })).filter((v): v is Vid => !!v.id);
 
 /** A lecture whose publisher has switched off embedding: a thumbnail that opens YouTube. */
 const LinkOut = ({ v }: { v: Vid }) => (
@@ -23,6 +24,22 @@ const LinkOut = ({ v }: { v: Vid }) => (
     <span className="lo"><Icon name="play" size={28} /><b>Watch on YouTube</b><small>The publisher doesn't allow embedding</small></span>
   </a>
 );
+
+function VideoGrid({ vids }: { vids: Vid[] }) {
+  return (
+    <div className="vlist">
+      {vids.map((v) => (
+        <div className="v" key={v.id}>
+          {canEmbed(v) ? <div className="fr"><Embed id={v.id} title={v.title} /></div> : <LinkOut v={v} />}
+          {v.src && <small className="src">{v.src}</small>}
+          <p><a href={v.url} target="_blank" rel="noopener">{v.title}</a> <span>({v.len})</span></p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 
 export function LessonPage() {
   const t = useTrack();
@@ -37,9 +54,10 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
   const cur = t.all[idx], l = cur.l, nxt = t.all[idx + 1], prev = t.all[idx - 1];
   const mo = t.monthOf(cur.w), done = !!progress[t.lessonKey(l.id)];
   const lessonsDone = t.all.filter((x) => progress[t.lessonKey(x.l.id)]).length;
-  const vids = l.watch.map((v) => ({ ...v, id: ytId(v.url) })).filter((v): v is Vid => !!v.id);
+  const vids = vidsOf(l.watch);
   const main = vids.find(canEmbed);
   const rest = vids.filter((v) => v !== main);
+  const unit = t.copy.unit;
   const h1 = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -54,7 +72,7 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
         <div className="wrap">
           <Link className="back" to={t.hash(`w${cur.w}`)}><Icon name="left" />Back to course</Link>
           <span className="ct">Week {cur.w}: {t.weekOf(cur.w)[0]}</span>
-          <span className="prog"><span className="bar"><i style={{ width: `${Math.round((lessonsDone / t.all.length) * 100)}%` }} /></span><span>{lessonsDone}/{t.all.length} lessons</span></span>
+          <span className="prog"><span className="bar"><i style={{ width: `${Math.round((lessonsDone / t.all.length) * 100)}%` }} /></span><span>{lessonsDone}/{t.all.length} {unit}s</span></span>
         </div>
       </div>
       <div className="wrap">
@@ -70,11 +88,12 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
               <p className="crumb">{t.id === "engineer" ? "AI engineer · " : ""}Month {mo}: {t.months[mo - 1].t} / Week {cur.w}</p>
               <h1 tabIndex={-1} ref={h1}>{l.title}</h1>
               <div className="lmeta">
-                <span><Icon name="book" />Lecture {cur.i + 1} of {t.lessons[cur.w].length}</span>
+                <span><Icon name="book" />{cap(unit)} {cur.i + 1} of {t.lessons[cur.w].length}</span>
                 <span><Icon name="clock" />{l.mins} min read</span>
                 {vids.length > 0 && <span><Icon name="play" />{vids.length} video{vids.length > 1 ? "s" : ""}</span>}
                 {l.problems && <span><Icon name="pen" />{l.problems.length} problems</span>}
                 <span><Icon name="quiz" />{l.quiz.length}-question quiz</span>
+                {l.deep && <span><Icon name="flag" />Optional deep dive</span>}
               </div>
             </div>
 
@@ -82,7 +101,7 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
               <div className="card goals">
                 {l.objectives && (
                   <>
-                    <h2><span className="ico" style={{ ["--c" as string]: "var(--mint)" }}><Icon name="flag" /></span>By the end of this lecture you can</h2>
+                    <h2><span className="ico" style={{ ["--c" as string]: "var(--mint)" }}><Icon name="flag" /></span>By the end of this {unit} you can</h2>
                     <ul>{l.objectives.map((o) => <li key={o}><Icon name="check" /><span dangerouslySetInnerHTML={{ __html: withMath(o) }} /></li>)}</ul>
                   </>
                 )}
@@ -91,22 +110,14 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
             )}
 
             <div className="card">
-              <h2><span className="ico" style={{ ["--c" as string]: "var(--brand)" }}><Icon name="doc" /></span>Lecture notes</h2>
+              {t.id === "engineer" && <h2><span className="ico" style={{ ["--c" as string]: "var(--brand)" }}><Icon name="doc" /></span>Lecture notes</h2>}
               <div className="prose" dangerouslySetInnerHTML={{ __html: withMath(l.body) }} />
             </div>
 
             {rest.length > 0 && (
               <div className="card">
                 <h2><span className="ico" style={{ ["--c" as string]: "var(--coral)" }}><Icon name="play" /></span>{rest.some((v) => v.src) ? "University lectures" : "More to watch"}</h2>
-                <div className="vlist">
-                  {rest.map((v) => (
-                    <div className="v" key={v.id}>
-                      {canEmbed(v) ? <div className="fr"><Embed id={v.id} title={v.title} /></div> : <LinkOut v={v} />}
-                      {v.src && <small className="src">{v.src}</small>}
-                      <p><a href={v.url} target="_blank" rel="noopener">{v.title}</a> <span>({v.len})</span></p>
-                    </div>
-                  ))}
-                </div>
+                <VideoGrid vids={rest} />
               </div>
             )}
 
@@ -124,9 +135,11 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
               <div className="ex" dangerouslySetInnerHTML={{ __html: withMath(l.exercise) }} />
             </div>
 
-            {l.problems && <Problems problems={l.problems} />}
+            {l.problems && <div className="card"><Problems problems={l.problems} /></div>}
 
-            <Quiz questions={l.quiz} />
+            <Quiz questions={l.quiz} unit={unit} />
+
+            {l.deep && <GoDeep t={t} l={l} />}
 
             <div className="actions">
               {prev ? <Link className="btn btn-ghost btn-sm" to={t.lessonHref(prev.l.id)}><Icon name="left" />Previous</Link> : <span />}
@@ -135,7 +148,7 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
                   <Icon name="check" /><span>{done ? "Completed" : "Mark complete"}</span>
                 </button>
                 {nxt
-                  ? <Link className="btn btn-primary btn-sm" to={t.lessonHref(nxt.l.id)}>Next lecture<Icon name="right" /></Link>
+                  ? <Link className="btn btn-primary btn-sm" to={t.lessonHref(nxt.l.id)}>Next {unit}<Icon name="right" /></Link>
                   : <Link className="btn btn-primary btn-sm" to={t.hash("content")}>Back to curriculum</Link>}
               </div>
             </div>
@@ -147,10 +160,44 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
   );
 }
 
-function Problems({ problems }: { problems: Problem[] }) {
+/** Optional depth after the quiz: collapsed by default, never needed to complete the lesson. */
+function GoDeep({ t, l }: { t: Track; l: Lesson }) {
+  const { progress, setItem } = useStore();
+  const d = l.deep!;
+  const key = t.deepKey(l.id), done = !!progress[key];
+  const vids = vidsOf(d.watch);
+  const parts = [
+    ...vids.map((v) => `${v.src?.split(" · ")[0] ?? "Lecture"} (${v.len})`),
+    ...(d.notes ? ["the theory behind it"] : []),
+    ...(d.problems?.length ? [`${d.problems.length} problem${d.problems.length > 1 ? "s" : ""} with worked solutions`] : []),
+  ];
   return (
-    <div className="card">
-      <h2><span className="ico" style={{ ["--c" as string]: "var(--coral)" }}><Icon name="pen" /></span>Problem set</h2>
+    <details className="card deep">
+      <summary>
+        <span className="ico" style={{ ["--c" as string]: "var(--sky)" }}><Icon name="play" /></span>
+        <div>
+          <b>{done ? "You went deep on this one." : "You've got the core. Want to go deeper?"}</b>
+          <small>{parts.join(" · ")} · Optional</small>
+        </div>
+        <Icon name="chev" className="i chev" />
+      </summary>
+      <div className="deepbody">
+        <p className="muted">Nothing here is needed to complete the {t.copy.unit}. Take it when you're curious, now or later.</p>
+        {vids.length > 0 && <><h3>University lecture{vids.length > 1 ? "s" : ""}</h3><VideoGrid vids={vids} /></>}
+        {d.notes && <div className="prose" dangerouslySetInnerHTML={{ __html: withMath(d.notes) }} />}
+        {d.problems && d.problems.length > 0 && <><h3>Problems</h3><Problems problems={d.problems} bare /></>}
+        <button className="btn btn-ghost btn-sm" aria-pressed={done} onClick={() => setItem(key, !done)}>
+          <Icon name="check" /><span>{done ? "Deep dive done" : "Mark deep dive done"}</span>
+        </button>
+      </div>
+    </details>
+  );
+}
+
+function Problems({ problems, bare }: { problems: Problem[]; bare?: boolean }) {
+  return (
+    <>
+      {!bare && <h2><span className="ico" style={{ ["--c" as string]: "var(--coral)" }}><Icon name="pen" /></span>Problem set</h2>}
       <p className="muted pintro">Work each problem on paper before you open the solution.</p>
       <ol className="probs">
         {problems.map((p, i) => (
@@ -163,11 +210,11 @@ function Problems({ problems }: { problems: Problem[] }) {
           </li>
         ))}
       </ol>
-    </div>
+    </>
   );
 }
 
-function Quiz({ questions }: { questions: QuizQuestion[] }) {
+function Quiz({ questions, unit }: { questions: QuizQuestion[]; unit: string }) {
   const [picks, setPicks] = useState<Record<number, number>>({});
   const answered = Object.keys(picks).length;
   const correct = questions.filter((q, qi) => picks[qi] === q.a).length;
@@ -192,7 +239,7 @@ function Quiz({ questions }: { questions: QuizQuestion[] }) {
       })}
       <p className="score" aria-live="polite">
         {answered === questions.length && (correct === answered
-          ? `${correct} of ${answered} correct. Mark the lecture complete once you've done the exercise and problem set.`
+          ? `${correct} of ${answered} correct. Mark the ${unit} complete once you've done the exercise.`
           : `${correct} of ${answered} correct so far.`)}
       </p>
     </div>
@@ -230,7 +277,7 @@ function Sidebar({ t, cur }: { t: Track; cur: LessonRef }) {
                   <li key={l.id} className={progress[t.lessonKey(l.id)] ? "done" : ""}>
                     <Link to={t.lessonHref(l.id)} aria-current={l.id === cur.l.id ? "page" : undefined}>
                       <Check />
-                      <span>{wn}.{i + 1} {l.title}<small>{hasVideo(l) ? "Lecture + notes" : "Notes"}{l.problems ? " + problems" : ""}, {l.mins} min</small></span>
+                      <span>{wn}.{i + 1} {l.title}{progress[t.deepKey(l.id)] && <em className="deepmark">Deep</em>}<small>{hasVideo(l) ? "Video + reading" : "Reading"}, {l.mins} min</small></span>
                     </Link>
                   </li>
                 ))}

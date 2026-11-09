@@ -10,7 +10,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
  "1-1": {
   objectives: ["Explain next-token prediction and write down the probability a model assigns to a whole sequence","Describe what pre-training, fine-tuning and reinforcement learning each add","Predict how a base model and an assistant model will respond differently to the same input"],
   lectures: [U.mit191llm, U.cs229llm],
-  notes: h`
+  deepNotes: h`
 <h3>The one equation</h3>
 <p>A language model assigns a probability to every possible sequence of tokens by breaking it into one prediction per position:</p>
 \[P(x_1, x_2, \dots, x_T) = \prod_{t=1}^{T} P(x_t \mid x_1, \dots, x_{t-1})\]
@@ -33,7 +33,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
  "1-3": {
   objectives: ["Compute next-token probabilities from logits at different temperatures","Choose sampling settings for extraction vs creative tasks","Explain why one successful run is weak evidence"],
   lectures: [U.cs224n_nlg],
-  notes: h`
+  deepNotes: h`
 <h3>The maths of temperature</h3>
 <p>The model outputs a score (a <em>logit</em>) \(z_i\) for each token. Sampling turns scores into probabilities with a softmax divided by the temperature \(T\):</p>
 \[p_i = \frac{e^{z_i / T}}{\sum_j e^{z_j / T}}\]
@@ -46,7 +46,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "1-4": {
   objectives: ["Identify which claims in an answer are most likely to be hallucinated","Design a verification step proportional to the cost of being wrong","Reason about a hallucination checker's precision using Bayes' rule"],
-  lectures: [U.cs25rag],
+
   problems: [
    {q:h`<p>A model writes a two-page legal memo with four case citations. Design a check that takes under 15 minutes.</p>`,
     a:h`<p>Check the claims that are cheap to verify and expensive to get wrong: (1) look up all four citations in the official law report or database and confirm each exists and says what is claimed; (2) check every number and date against the source; (3) ask the model, in a fresh session with the sources pasted in, which statements are not supported by them. Any citation that cannot be found is treated as invented, and the memo is reworked from the sources.</p>`},
@@ -72,7 +72,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "2-3": {
   objectives: ["Choose few-shot examples that cover the range of inputs without biasing the output","Structure prompts with tags","Decide when asking the model to reason first improves accuracy"],
-  lectures: [U.cs224n_agents],
+
   problems: [
    {q:h`<p>Your sentiment-classification prompt has three examples, all labelled "positive". Accuracy on negative reviews is poor. Why, and how do you fix it?</p>`,
     a:h`<p>The examples act as a prior: the model copies their labels and style as well as the task. Use examples that are balanced across labels, include at least one hard or borderline case, and vary length and wording so the model doesn't learn surface features. Then re-run your test set to confirm the fix.</p>`},
@@ -82,7 +82,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
  "2-4": {
   objectives: ["Build a test set of real cases for a prompt","Tell a real improvement from noise using a standard error","Change one variable at a time and read the failures"],
   lectures: [U.cs224n_bench],
-  notes: h`
+  deepNotes: h`
 <h3>How big is the noise?</h3>
 <p>If a prompt's true success rate is \(p\) and you test it on \(n\) cases, the measured rate has a standard error of about</p>
 \[\text{SE} = \sqrt{\frac{p(1-p)}{n}}\]
@@ -181,17 +181,19 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "10-3": {
   objectives: ["Estimate the memory needed for a model at a given precision","Compute the KV-cache size for a context length","Choose a quantisation level for your hardware"],
-  prereqs: "<p>Lesson 10.1, and the memory numbers you noted for your own machine. The maths here is multiplication: if the formulas look scary, read the worked problems first.</p>",
+  prereqs: "<p>Lesson 10.1, and the memory numbers you noted for your own machine.</p>",
   lectures: [U.quant],
-  notes: h`
+  notes: `
+<h3>Will it fit? The quick rule</h3>
+<p><b>At 4-bit, a model needs a bit more than half its parameter count in gigabytes</b> (an 8B model needs about 5 GB), plus room for the context. Leave a couple of gigabytes for your operating system and other apps.</p>
+<div class="callout"><b>Quick guide by machine:</b> 8 GB RAM, no GPU: 1–4B models at 4-bit. 16 GB RAM or a 6–8 GB GPU: 7–8B models at 4-bit. 32 GB+ or a 16–24 GB GPU: 14–32B models. If a model is painfully slow or crashes, step down one size before trying anything else.</div>`,
+  deepNotes: h`
 <h3>The two numbers that decide whether it fits</h3>
 <p>The weights of a model with \(N\) parameters stored at \(b\) bits each take about</p>
 \[\text{weights} \approx N \times \frac{b}{8} \ \text{bytes}\]
 <p>On top of that, every token in the context stores keys and values for each layer (the KV cache):</p>
 \[\text{KV per token} = 2 \times L \times H_{kv} \times d_{head} \times \text{bytes per value}\]
-<p>where \(L\) is the number of layers, \(H_{kv}\) the number of key/value heads and \(d_{head}\) the head dimension.</p>
-<p>You don't need to memorise these. The practical rule: <b>at 4-bit, a model needs a bit more than half its parameter count in gigabytes</b> (an 8B model needs about 5 GB), plus room for the context. Leave a couple of gigabytes for your operating system and other apps.</p>
-<div class="callout"><b>Quick guide by machine:</b> 8 GB RAM, no GPU: 1–4B models at 4-bit. 16 GB RAM or a 6–8 GB GPU: 7–8B models at 4-bit. 32 GB+ or a 16–24 GB GPU: 14–32B models. If a model is painfully slow or crashes, step down one size before trying anything else.</div>`,
+<p>where \(L\) is the number of layers, \(H_{kv}\) the number of key/value heads and \(d_{head}\) the head dimension. The quick rule in the lesson comes straight from the first formula: at 4 bits, \(b/8 = 0.5\) bytes per parameter.</p>`,
   problems: [
    {q:h`<p>How much memory do the weights of an 8-billion-parameter model need at 16-bit and at 4-bit precision?</p>`,
     a:h`<p>16-bit: \(8 \times 10^9 \times 2 = 16\) GB. 4-bit: \(8 \times 10^9 \times 0.5 = 4\) GB, plus some overhead (quantisation scales and runtime buffers), so plan for about 5 GB. This is why a 4-bit 8B model runs on a laptop with 8 GB of VRAM or 16 GB of unified memory.</p>`},
@@ -214,7 +216,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   objectives: ["Decide whether a problem needs fine-tuning, RAG or a better prompt","Compute how many parameters LoRA trains","Describe the LoRA workflow and its common failures"],
   prereqs: "<p>Lessons 10.1–10.4. Fine-tuning is optional this week: understanding <em>when</em> to do it matters more than doing it. If you do try it, a free GPU notebook is enough for a small model.</p>",
   lectures: [U.cs224n_post],
-  notes: h`
+  deepNotes: h`
 <h3>LoRA in one equation</h3>
 <p>Instead of updating a weight matrix \(W \in \mathbb{R}^{d \times k}\), LoRA freezes it and learns a low-rank update:</p>
 \[W' = W + \frac{\alpha}{r} B A, \qquad B \in \mathbb{R}^{d \times r},\ A \in \mathbb{R}^{r \times k},\ r \ll \min(d, k)\]

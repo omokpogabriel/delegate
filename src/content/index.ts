@@ -24,26 +24,38 @@ export type TrackCopy = {
   curriculum: string;
   /** short name for the switcher */
   label: string;
+  /** what one item is called: "lesson" or "lecture" */
+  unit: string;
+  /** hero chips: [top, bottom-without-backup] */
+  chips: [string, string];
+  feats: { c: string; i: string; t: string; d: string }[];
 };
 
-/** Merge university lectures, objectives and problem sets into a lesson. */
-function upgrade(l: Lesson, u?: LessonUpgrade): Lesson {
-  if (!u) return l;
-  return {
+/**
+ * Merge an upgrade into a lesson. On a beginner track (`split`), university lectures (any video with `src`),
+ * theory notes and the problem set move into the optional `deep` section; the core lesson stays short.
+ */
+function upgrade(l: Lesson, u: LessonUpgrade | undefined, split: boolean): Lesson {
+  const watch = [...(u?.lectures ?? []), ...l.watch];
+  const base: Lesson = {
     ...l,
-    objectives: u.objectives ?? l.objectives,
-    prereqs: u.prereqs ?? l.prereqs,
-    problems: u.problems ?? l.problems,
-    body: u.notes ? l.body + u.notes : l.body,
-    watch: [...(u.lectures ?? []), ...l.watch],
+    objectives: u?.objectives ?? l.objectives,
+    prereqs: u?.prereqs ?? l.prereqs,
+    problems: u?.problems ?? l.problems,
+    body: u?.notes ? l.body + u.notes : l.body,
+    watch,
   };
+  if (!split) return base;
+  const deep = { watch: watch.filter((v) => v.src), notes: u?.deepNotes, problems: base.problems };
+  const has = deep.watch.length > 0 || !!deep.notes || !!deep.problems?.length;
+  return { ...base, watch: watch.filter((v) => !v.src), problems: undefined, deep: has ? deep : undefined };
 }
 
 /** One course. `prefix` keeps each track's progress keys apart; the agents track uses "" so saved progress keeps working. */
 function makeTrack(id: string, base: string, prefix: string, name: string, months: Month[],
   links: Record<string, [string, string]>, raw: Record<number, Lesson[]>, copy: TrackCopy) {
   const lessons: Record<number, Lesson[]> = Object.fromEntries(
-    Object.entries(raw).map(([w, ls]) => [w, ls.map((l) => upgrade(l, prefix ? undefined : UPGRADES[l.id]))]),
+    Object.entries(raw).map(([w, ls]) => [w, ls.map((l) => upgrade(l, prefix ? undefined : UPGRADES[l.id], !prefix))]),
   );
   const all: LessonRef[] = Object.keys(lessons).map(Number).sort((a, b) => a - b)
     .flatMap((w) => lessons[w].map((l, i) => ({ w, i, l })));
@@ -53,6 +65,8 @@ function makeTrack(id: string, base: string, prefix: string, name: string, month
   const lessonsFor = (wn: number) => lessons[wn] ?? [];
   const lessonKey = (lid: string) => `L${prefix}${lid}`;
   const taskId = (wn: number, ti: number) => `t${prefix}${wn}_${ti}`;
+  /** set when the learner finishes a lesson's optional Go deep section; never counted towards progress */
+  const deepKey = (lid: string) => `D${prefix}${lid}`;
   const total = weeks.reduce((a, wn) => a + weekOf(wn)[2].length + lessonsFor(wn).length, 0);
 
   function weekStats(p: Progress, wn: number): [done: number, total: number] {
@@ -78,7 +92,7 @@ function makeTrack(id: string, base: string, prefix: string, name: string, month
 
   return {
     id, base, name, copy, months, links, lessons, all, weeks,
-    monthOf, weekOf, lessonsFor, lessonKey, taskId, weekStats, monthStats, overall,
+    monthOf, weekOf, lessonsFor, lessonKey, taskId, deepKey, weekStats, monthStats, overall,
     lessonMins: (wn: number) => lessonsFor(wn).reduce((a, l) => a + l.mins, 0),
     /** link to a lesson in this track */
     lessonHref: (lid: string) => `${base}/lesson/${lid}`,
@@ -97,7 +111,15 @@ export const AGENTS = makeTrack("agents", "", "", "AI agent user", MONTHS, LINKS
     pill: "Self-paced, 24 weeks, free",
     h1: "Become one of ",
     accent: "the best users of AI",
-    lede: "A hands-on course for people who want to hand real work to AI agents and trust what comes back. University lectures from Stanford, MIT and Berkeley, lecture notes with problem sets, real projects, and a practical exam at the end of every month.",
+    lede: "A hands-on course for people who want to hand real work to AI agents and trust what comes back. Short lessons, real projects, and a practical exam at the end of every month. When you want more, each lesson has an optional deep dive.",
+    unit: "lesson",
+    chips: ["A quiz in every lesson", "Build something every week"],
+    feats: [
+      { c: "var(--brand)", i: "hammer", t: "Build more than you read", d: "No tutorial longer than 20 minutes without building something straight after." },
+      { c: "var(--coral)", i: "ship", t: "Exams you ship", d: "Every month ends with a practical exam. You pass by shipping, not by answering questions." },
+      { c: "var(--lilac)", i: "log", t: "A failure log", d: "Record every time an agent gets something wrong, and why. It becomes your most useful asset." },
+      { c: "var(--sky)", i: "play", t: "Go deep when you want", d: "Optional deep dives after a lesson: university lectures, the theory, and problems with worked solutions." },
+    ],
     outcomes: [
       "Ship real software with 3–5 agents working in parallel, and trust the output",
       "Pick the right model for a task from your own evals, not hype",
@@ -116,6 +138,14 @@ export const ENGINEER = makeTrack("engineer", "/engineer", "e", "AI engineer", E
     h1: "Become ",
     accent: "an AI engineer",
     lede: "The maths, the models and the engineering, taught the way Stanford and MIT teach it: each week built around a real university lecture, with rigorous notes, worked problems and something you build from scratch. Assumes you can already program.",
+    unit: "lecture",
+    chips: ["Stanford, MIT and Berkeley lectures", "Problem sets with worked solutions"],
+    feats: [
+      { c: "var(--brand)", i: "play", t: "University lectures", d: "Each week is anchored in a real lecture from Stanford, MIT, Harvard or Berkeley, chosen and checked for this course." },
+      { c: "var(--sky)", i: "doc", t: "Lecture notes", d: "Rigorous notes with learning objectives, worked examples and the maths written out, so you can study without the video." },
+      { c: "var(--coral)", i: "pen", t: "Problem sets", d: "Problems at the end of every lecture, each with a worked solution to check yourself against." },
+      { c: "var(--lilac)", i: "ship", t: "Exams you ship", d: "Every month ends with a practical exam. You pass by building something, not by answering questions." },
+    ],
     outcomes: [
       "Read the maths in a machine-learning paper and follow it",
       "Derive and implement gradient descent and backpropagation yourself",

@@ -26,7 +26,7 @@ Owner: Gabriel Omokpo (ISUX Technologies). Live at https://learnai.isuxtech.com
   - **Agent user** (`/`, `/lesson/:id`): `course.ts` outline, lessons in `month1.ts` (weeks 1–4) and `month3.ts` (week 10)
   - **AI engineer** (`/engineer`, `/engineer/lesson/:id`): `engineer/course.ts` outline, lessons in `engineer/week1.ts` (registered in `engineer/index.ts`)
 - `unis.ts`: verified university lectures (Stanford, MIT, Harvard, Berkeley). `embed:false` = publisher disabled embedding, so the page links out
-- `lectures.ts`: lecture upgrades for agent-track lessons (objectives, university lectures, extra notes, problem sets), merged by lesson id
+- `lectures.ts`: upgrades for agent-track lessons, merged by lesson id. On the agent track, university lectures (any video with `src`), `deepNotes` and problem sets go into the collapsed "Go deep" section after the quiz; `notes` (beginner help) stays in the lesson. Go deep is optional and never counts towards progress (key `D<id>`)
 - Maths: write `\( \)` / `\[ \]` inside `String.raw` (h`...`) strings; rendered with KaTeX by `src/lib/math.ts`
 - Learner state, local storage and background sync: `src/lib/store.tsx`
 - API client: `src/lib/api.ts`

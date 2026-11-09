@@ -41,7 +41,7 @@ export const week5: Lesson[] = [
 <h3>The quickest start</h3>
 <p>In Claude Code, open your project and type <code>/init</code>. The agent reads your code and drafts a <code>CLAUDE.md</code> for you. <b>Treat that draft as a first draft, not a finished file</b>: it describes what the code looks like, but it can't know your unwritten rules. The next lesson shows you how to turn it into something useful.</p>
 <div class="callout"><b>Stuck?</b> If <code>/init</code> isn't recognised, you're probably typing it in your normal terminal instead of inside the agent. Start the agent first (type <code>claude</code> in the project folder), then type <code>/init</code> at its prompt. If you use a tool that reads <code>AGENTS.md</code>, create the file by hand in the project root: an empty file is fine to start with.</div>`,
-  watch:[U.berkeleySwe],
+  watch:[],
   read:[R.memory, R.agentsmd],
   exercise:`<p>Pick one real project. Run <code>/init</code> (or create <code>AGENTS.md</code> by hand). Then open a fresh session and ask the agent: "Without reading any code, tell me how to run this project's tests and what I must never change." Note what it gets right from the memory file alone, and what is missing. You'll fix the gaps in the next lesson.</p>`,
   problems:[
@@ -132,7 +132,7 @@ Node.js REST API for a small online shop. Used by our mobile app.
 <h3>When to plan</h3>
 <p>Plan when a change touches more than a couple of files, when you don't know the code well, or when a mistake would be expensive. Skip it for small, obvious edits like fixing a typo or renaming a variable: planning those just slows you down.</p>
 <div class="callout"><b>Stuck?</b> If you can't judge whether a plan is good because you don't understand the code, ask the agent to explain it: "Before I approve, explain in plain English what each file you're changing does and why it needs to change." Understanding the plan is part of the job, and it's also how you learn the codebase.</div>`,
-  watch:[U.agenticWebinar],
+  watch:[],
   read:[R.workflows, R.best],
   exercise:`<p>Pick a real change that touches at least three files. Run it in plan mode. Before approving, write down one thing you changed in the plan and why. After the build, compare the result with the plan: did the agent stick to it?</p>`,
   problems:[
@@ -183,7 +183,7 @@ Node.js REST API for a small online shop. Used by our mobile app.
 <h3>Feedback the agent can use</h3>
 <p>Point to the exact place and the expected behaviour: "In <code>orders.js</code> line 15, an empty <code>items</code> list should return 0, but <code>qty</code> can be undefined for old orders; default it to 1 and add a test for that case." Vague feedback ("this looks wrong") gets vague fixes.</p>
 <div class="callout"><b>Stuck?</b> If a diff is too big to understand, it's too big. Ask the agent to undo it and redo the work in smaller steps, one commit per step. Reviewing five small diffs is much easier than one huge one, and that's a habit, not a weakness.</div>`,
-  watch:[U.berkeleySwe],
+  watch:[],
   read:[R.best],
   exercise:`<p>Take the change from lesson 5.3's exercise. Review its diff using the four questions, and write your findings as numbered comments. Send them to the agent as one message, then review its fixes the same way. Add anything it got wrong to your failure log.</p>`,
   problems:[
@@ -262,7 +262,7 @@ description: Write release notes from recent commits. Use when the user asks for
 <h3>The brief is everything</h3>
 <p>The subagent starts with nothing but your brief, just like a new session. So say what to find, where to look, and exactly what shape the answer should take. "Look into emails" gets a rambling essay; "List each place we send email as: file, line, trigger, recipient. Under 20 lines." gets something you can use.</p>
 <div class="callout"><b>Stuck?</b> Subagents can feel abstract at first. Think of it as sending a colleague to the archive: you don't want them to bring back every box they opened, just the answer. If the summary that comes back is too long or vague, the fix is almost always a more specific brief.</div>`,
-  watch:[U.cs224n_agents],
+  watch:[],
   read:[R.subagents, R.context],
   exercise:`<p>In a real project, give the same research question twice: once directly in the main session, and once through a subagent with a precise answer format. Compare the answers, and check how full the context is afterwards (Claude Code's <code>/context</code> command shows it). Write two sentences on the difference.</p>`,
   problems:[
@@ -477,7 +477,7 @@ Tell me what you saw, with the screenshot.</pre>
 <li><b>Add a second test with different inputs</b> when a fix looks suspiciously narrow. Special-cased code fails it.</li>
 </ol>
 <div class="callout"><b>Don't be discouraged</b> when you catch one of these. Catching it is the skill this week is teaching. Each one goes in your failure log with the defence you added. After a few weeks you'll have far fewer, because your setup will block most of them automatically.</div>`,
-  watch:[U.cs224n_bench],
+  watch:[],
   read:[R.best],
   exercise:`<p>Go back through your failure log and your last ten agent changes. Find any case of the patterns above (or deliberately ask for something hard with a test and watch closely). For each one, write the pattern, how you spotted it and which defence you've added.</p>`,
   problems:[
@@ -563,7 +563,7 @@ git branch -d feature-search</pre>
 <li>One agent is stuck in a loop on the same error: stop it, read the error yourself, and give it a specific next step.</li>
 </ul>
 <div class="callout"><b>Stuck or overwhelmed?</b> That's normal on the first try. Drop to two agents for the morning and add the third in the afternoon. The skill being tested is running parallel work under control, not maximum speed. Write down where your time went: that's the most useful part of the write-up.</div>`,
-  watch:[U.berkeleyAgents],
+  watch:[],
   read:[R.workflows],
   exercise:`<p>Do the exam preparation: choose three non-overlapping features, write the three specs, update the memory file, and create and set up three worktrees. Check each spec against the question "could an agent work for 20 minutes with only this?"</p>`,
   problems:[

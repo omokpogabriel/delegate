@@ -39,7 +39,12 @@ export type Lesson = {
   /** problem set with worked solutions */
   problems?: Problem[];
   quiz: QuizQuestion[];
+  /** optional "Go deep" material, shown collapsed after the quiz (set by makeTrack on beginner tracks) */
+  deep?: Deep;
 };
+
+/** Optional depth for a lesson: university lectures, theory notes and a problem set. */
+export type Deep = { watch: Resource[]; notes?: string; problems?: Problem[] };
 
 /** [title, build description, tasks] */
 export type Week = [string, string, string[]];
@@ -58,6 +63,8 @@ export type Month = {
 export type LessonUpgrade = Pick<Lesson, "objectives" | "prereqs" | "problems"> & {
   /** university lectures, shown before the lesson's own videos */
   lectures?: Resource[];
-  /** extra notes appended to the lesson body (trusted HTML) */
+  /** beginner-friendly notes appended to the lesson body (trusted HTML) */
   notes?: string;
+  /** theory and maths notes for the "Go deep" section (trusted HTML) */
+  deepNotes?: string;
 };
