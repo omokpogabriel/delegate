@@ -30,6 +30,10 @@ export const U = {
   // Stanford CME295 (Amidi & Amidi), Autumn 2026: linked straight to the chapter that matches the lesson
   cme295_tok: { title: "Transformers, full lecture. Opens at the Tokenization chapter (16:56); rewind to watch from the start", url: "https://www.youtube.com/watch?v=114i2Kz-LZA&t=1016s", src: "Stanford CME295 · Autumn 2026 · Lecture 1", len: "1 hr 44 min", embed: false },
   cme295_ctx: { title: "Large language models, full lecture. Opens at the Context rot chapter (1:38:38); rewind to watch from the start", url: "https://www.youtube.com/watch?v=GaIeu3npx04&t=5918s", src: "Stanford CME295 · Autumn 2026 · Lecture 2", len: "1 hr 43 min", embed: false },
+  // Lesson 1.3 Go deep: focused on sampling and temperature (replaced the broader CS224N NLG lecture, Nov 2026)
+  tempSoftmax: u("YjVuJjmgclU", "Softmax: what is the temperature of an AI?", "MarbleScience", "9 min"),
+  tempControls: u("MkaazQttbpc", "The secret controls for your LLM: temperature, top-K, top-P", "Gary Explains", "15 min"),
+  tempSampling: u("-BBulGM6xF0", "Random sampling: temperature, top-k and top-p", "DataMListic", "8 min"),
   cs336_2: u("msHyYioAyNE", "PyTorch and resource accounting — Percy Liang", "Stanford CS336 · Spring 2025 · Lecture 2", "79 min", false),
   cs336_3: u("ptFiH_bHnJw", "Architectures and hyperparameters", "Stanford CS336 · Spring 2025 · Lecture 3", "87 min", false),
   cs336_10: u("fcgPYo3OtV0", "Inference", "Stanford CS336 · Spring 2025 · Lecture 10", "82 min", false),

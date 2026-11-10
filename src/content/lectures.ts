@@ -40,7 +40,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "1-3": {
   objectives: ["Explain what temperature does to the model's choice of next word","Choose low or high temperature for a given task","Explain why one successful run proves very little"],
-  lectures: [U.cs224n_nlg],
+  lectures: [U.tempSoftmax, U.tempControls, U.tempSampling],
   deepNotes: h`
 <h3>What temperature actually does</h3>
 <p><b>In plain English:</b> for every possible next token, the model gives a raw score. Higher score means "more likely". These scores are turned into probabilities that add up to 100%. Temperature controls how strongly the top score wins: low temperature makes the favourite even more likely; high temperature gives the others more of a chance.</p>
