@@ -69,7 +69,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "2-1": {
   objectives: ["Rewrite a vague request into a complete brief","Use the new-hire test on any prompt","Explain why giving the reason improves the answer"],
-  lectures: [U.cs224n_prompt],
+  lectures: [U.promptDeepDive, U.promptTechniques],
   problems: [
    {q:h`<p>Rewrite "Summarise this report" as a proper brief.</p>`,
     a:h`<p>One good version: "You're briefing the CEO of a 40-person logistics company who has five minutes before a board meeting. Summarise the attached quarterly report in at most 150 words. Start with the one decision the board needs to make, then the three most important numbers and how each changed since last quarter, then any risks. Use plain English. If the report doesn't support a claim, leave it out."</p><p>It says who it's for, why, how long, in what order, in what style, and what to do when unsure.</p>`},
@@ -94,7 +94,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "2-4": {
   objectives: ["Build a small set of real test cases for a prompt","Tell a real improvement from luck","Change one thing at a time and learn from the failures"],
-  lectures: [U.cs224n_bench],
+  lectures: [U.evalsCourse],
   deepNotes: h`
 <h3>How much of a score is luck?</h3>
 <p><b>In plain English:</b> if you test a prompt on only a few cases, its score bounces around by chance, like flipping a coin 10 times and getting 7 heads. Before you believe "v2 is better", check whether the difference is bigger than that bounce.</p>
@@ -132,7 +132,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
   ]},
  "3-3": {
   objectives: ["Break a feature into small pieces an agent can build and check","Write a brief that says how to check the result","Know when to start a fresh session"],
-  lectures: [U.berkeleySwe],
+  lectures: [U.specDriven, U.ccBestTalk],
   problems: [
    {q:h`<p>Break "add password reset by email" into small pieces an agent can build and check one at a time.</p>`,
     a:h`<ol><li>A table to store reset codes, with a test that codes expire.</li><li>A "request reset" step that creates a code and sends the email, tested with a fake email sender.</li><li>A "confirm reset" step that checks the code and sets the new password, with tests for expired, reused and wrong codes.</li><li>A limit on how many reset requests one person can make, with a test.</li><li>The screens the user sees.</li></ol><p>Each piece ends with passing tests and a commit.</p>`},
@@ -248,7 +248,7 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
  "10-5": {
   objectives: ["Decide whether a problem needs fine-tuning, retrieval or just a better prompt","Explain why LoRA makes fine-tuning cheap","Describe the steps of a fine-tuning project and what goes wrong"],
   prereqs: "<p>Lessons 10.1–10.4. Fine-tuning is optional this week: understanding <em>when</em> to do it matters more than doing it. If you do try it, a free GPU notebook is enough for a small model.</p>",
-  lectures: [U.cs224n_post],
+  lectures: [U.loraCode, U.loraQlora],
   deepNotes: h`
 <h3>Why LoRA is so cheap</h3>
 <p><b>In plain English:</b> normal fine-tuning adjusts every number in the model. LoRA leaves the original numbers alone and trains a small "add-on" that nudges them. The add-on is built from two thin tables of numbers instead of one huge one, so there's far less to train.</p>

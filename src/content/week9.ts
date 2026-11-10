@@ -235,7 +235,7 @@ print("".join(b.text for b in reply.content if b.type == "text"))</pre>
 <h3>Safety</h3>
 <p>Because your code runs the tool, you're in control. Add a step limit to the loop (for example 10 rounds), validate inputs before running anything, and never give a model a tool that can do damage, like sending money or deleting records, without a human approval step.</p>
 <div class="callout"><b>Stuck?</b> The classic errors: forgetting to append the assistant's reply before the tool results (the API then rejects the request), a <code>tool_use_id</code> that doesn't match, and an infinite loop because the tool keeps returning an error the model can't fix. Print <code>reply.stop_reason</code> and each block on every round while you're learning: watching the loop step by step makes it click.</div>`,
-  watch:[U.cs224n_agents],
+  watch:[U.functionCalling],
   read:[R.tools, R.writingTools],
   exercise:`<p>Extend the example with a second tool, <code>cancel_order(order_id, reason)</code>, that only "cancels" after asking for confirmation in the terminal (<code>input("approve? y/n")</code>). Add a 10-round step limit. Try five different customer messages, including one that should use neither tool, and log every tool call.</p>`,
   problems:[
