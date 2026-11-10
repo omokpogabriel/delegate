@@ -39,15 +39,15 @@ export const MONTHS: Month[] = [
     ["Learn git worktrees","Write three specs before starting","Run all three sessions at once and review in turn","Write up where your time actually went"]]
   ]},
  {t:"Models and evals", s:"APIs, open models, and evidence over hype.", reads:["ollama","evals"],
-  exam:"An eval report comparing four or more models, open and closed, on one real task, with a recommendation backed by numbers.",
+  exam:"Project \"Which model for the clinic?\": a report comparing four or more models, hosted and open, on sorting a Lagos clinic's (synthetic) triage notes, with a recommendation backed by numbers on accuracy, critical misses, speed, cost and privacy.",
   weeks:[
    ["Calling models directly","Project \"Receipt reader\": turn WhatsApp order messages, receipt photos and voice notes into clean JSON using the API, with validation, retries and cost tracking.",
     ["Use system prompts and multi-turn messages","Get reliable structured (JSON) output","Implement basic tool calling"]],
    ["Local and open models","Project \"Offline assistant\": run an open model on your own computer as a custom Ollama model, and compare it with a hosted model on the same 10 inputs for accuracy, speed and cost.",
     ["Shortlist three models on Hugging Face and check their licences","Work out what fits your hardware at 4-bit and 8-bit","Run your chosen model with Ollama and call it from code","Compare local vs hosted on accuracy, speed and cost","Optional: fine-tune a small model with LoRA"]],
-   ["Building evals","Create a 30-case eval set for a task you actually do.",
-    ["Collect 30 real examples with known-good answers","Score with exact match, rubrics and model-as-judge","Re-run after every prompt change and track the score"]],
-   ["Exam week: model report","Compare 4+ models on accuracy, cost and speed.",
+   ["Building evals","Project \"Eval kit\": a 30-case eval set with scoring, a calibrated model-as-judge and an eval script for a feature you built, run before and after one fix guided by error analysis.",
+    ["Collect 30 real examples with known-good answers","Score with exact match, rubrics and model-as-judge","Re-run after every prompt change and track the score","Run a large eval with the batch API and compare its cost"]],
+   ["Exam week: model report","Project \"Which model for the clinic?\": compare 4+ models on 50 synthetic triage notes and publish a recommendation.",
     ["Run your eval set across all models","Chart cost, latency and accuracy","Publish a recommendation with the numbers"]]
   ]},
  {t:"Context and memory", s:"What the model sees, what it remembers, and how it finds things.", reads:["qdrant","graphrag"],

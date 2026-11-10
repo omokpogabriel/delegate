@@ -6,6 +6,7 @@ import { week9 } from "./week9";
 import { week10 } from "./month3";
 import { lesson10_6 } from "./lesson10-6";
 import { week22 } from "./week22";
+import { week11, week12 } from "./weeks11-12";
 import { l1_5, l1_6, l2_5, l3_5, l7_5, l9_6, l10_7 } from "./upgrade-w1-10";
 import { UPGRADES } from "./lectures";
 import { CORE_VIDEOS } from "./videos";
@@ -120,6 +121,7 @@ export const AGENTS = makeTrack("agents", "", "", "AI agent user", MONTHS, LINKS
     8: week8,
     9: [...week9, l9_6],
     10: [...week10, lesson10_6, l10_7],
+    11: week11, 12: week12,
     22: week22,
   },
   {
@@ -144,7 +146,7 @@ export const AGENTS = makeTrack("agents", "", "", "AI agent user", MONTHS, LINKS
       "Build your own agent harness and MCP servers",
       "Run agents in production that work without you watching",
     ],
-    curriculum: "Lessons are live for weeks 1–10 and week 22 (LLMOps); the rest are on the way. Every week's build and tasks are ready now.",
+    curriculum: "Lessons are live for weeks 1–12 and week 22 (LLMOps); the rest are on the way. Every week's build and tasks are ready now.",
   });
 
 export const ENGINEER = makeTrack("engineer", "/engineer", "e", "AI engineer", E_MONTHS, E_LINKS, E_LESSONS,
