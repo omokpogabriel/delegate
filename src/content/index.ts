@@ -6,6 +6,7 @@ import { week9 } from "./week9";
 import { week10 } from "./month3";
 import { lesson10_6 } from "./lesson10-6";
 import { week22 } from "./week22";
+import { l1_5, l1_6, l2_5, l3_5, l7_5, l9_6, l10_7 } from "./upgrade-w1-10";
 import { UPGRADES } from "./lectures";
 import { CORE_VIDEOS } from "./videos";
 import { E_LINKS, E_MONTHS } from "./engineer/course";
@@ -108,7 +109,19 @@ function makeTrack(id: string, base: string, prefix: string, name: string, month
 export type Track = ReturnType<typeof makeTrack>;
 
 export const AGENTS = makeTrack("agents", "", "", "AI agent user", MONTHS, LINKS,
-  { 1: week1, 2: week2, 3: week3, 4: week4, 5: week5, 6: week6, 7: week7, 8: week8, 9: week9, 10: [...week10, lesson10_6], 22: week22 },
+  {
+    // New lessons go at the END of their week: lessons cite each other by number ("lesson 1.4"),
+    // and the number comes from the position, so inserting mid-week would break those references.
+    1: [...week1, l1_5, l1_6],
+    2: [...week2, l2_5],
+    3: [...week3, l3_5],
+    4: week4, 5: week5, 6: week6,
+    7: [...week7, l7_5],
+    8: week8,
+    9: [...week9, l9_6],
+    10: [...week10, lesson10_6, l10_7],
+    22: week22,
+  },
   {
     label: "Agent user track",
     pill: "Self-paced, 24 weeks, free",

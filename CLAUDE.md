@@ -46,7 +46,7 @@ Owner: Gabriel Omokpo (ISUX Technologies). Live at https://learnai.isuxtech.com
 learners' saved progress depends on them. The AI engineer track adds an `e` prefix (`Le1-2`, `te3_0`).
 
 ## Status
-- Agent track: lessons for weeks 1–10 and week 22 (LLMOps, `week22.ts`) (44 lessons, including 10.6 on how LLMs are trained, in `lesson10-6.ts`), all with objectives and problem sets; weeks 5–10 also have "Stuck?" callouts and plain-English explanations of new terms.
+- Agent track: lessons for weeks 1–10 and week 22 (LLMOps, `week22.ts`) (51 lessons; the Nov 2026 gap-fill lessons 1.5, 1.6, 2.5, 3.5, 7.5, 9.6, 10.7 are in `upgrade-w1-10.ts`, including 10.6 on how LLMs are trained, in `lesson10-6.ts`), all with objectives and problem sets; weeks 5–10 also have "Stuck?" callouts and plain-English explanations of new terms.
 - AI engineer track: outline for all 24 weeks, each anchored to a named lecture; full lecture notes for Week 1 and Week 21 (MLOps: data and DVC, MLflow tracking and registry, serving and CI/CD, drift monitoring).
 - Next likely work: AI engineer weeks 2–4 (probability, gradient descent, logistic regression), then agent-track weeks 11–12.
 
@@ -69,3 +69,6 @@ Worked solutions go step by step with the numbers shown. Keep the maths correct:
 ## Videos
 - Agent-track core videos live in `src/content/videos.ts` (by lesson id). Every lesson must have at least one, on its topic.
 - No video may appear in more than one lesson, core or Go deep. Check channel, length and embedding before adding one.
+
+## Adding lessons to an existing week
+Append new lessons at the END of the week (see `index.ts`). Lesson numbers shown to learners come from position, and lessons cite each other by number ("lesson 1.4"), so inserting mid-week silently breaks those references. Give new lessons new ids so saved progress is unaffected.
