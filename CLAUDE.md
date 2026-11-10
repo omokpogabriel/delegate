@@ -46,7 +46,7 @@ Owner: Gabriel Omokpo (ISUX Technologies). Live at https://learnai.isuxtech.com
 learners' saved progress depends on them. The AI engineer track adds an `e` prefix (`Le1-2`, `te3_0`).
 
 ## Status
-- Agent track: lessons for weeks 1–10 (39 lessons), all with objectives and problem sets; weeks 5–10 also have "Stuck?" callouts and plain-English explanations of new terms.
+- Agent track: lessons for weeks 1–10 (40 lessons, including 10.6 on how LLMs are trained, in `lesson10-6.ts`), all with objectives and problem sets; weeks 5–10 also have "Stuck?" callouts and plain-English explanations of new terms.
 - AI engineer track: outline for all 24 weeks, each anchored to a named lecture; full lecture notes for Week 1 only.
 - Next likely work: AI engineer weeks 2–4 (probability, gradient descent, logistic regression), then agent-track weeks 11–12.
 

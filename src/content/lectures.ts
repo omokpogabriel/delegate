@@ -265,5 +265,19 @@ export const UPGRADES: Record<string, LessonUpgrade> = {
     a:h`<ol><li><b>Full grid:</b> 4,096 × 4,096 = 16,777,216 numbers.</li><li><b>LoRA:</b> \(r \times (d + k)\) = 16 × (4,096 + 4,096) = 16 × 8,192 = 131,072 numbers.</li><li><b>Share:</b> 131,072 ÷ 16,777,216 ≈ 0.0078, which is <b>0.78%</b>.</li></ol><p>You train less than 1% of the numbers. That's why LoRA fits on one graphics card and the result is a small file of a few megabytes.</p>`},
    {q:h`<p>A clinic wants the model to know its list of available drugs, which changes every month. Fine-tune, or use retrieval (looking up the current list and giving it to the model)?</p>`,
     a:h`<p><b>Retrieval.</b> Information that changes should be looked up fresh: updating the list takes minutes, and the answer can show where it came from. Fine-tuning is for teaching <em>how</em> to answer (style, format, behaviour), not for facts that must stay up to date.</p>`}
-  ]}
+  ]},
+ // 10-6 lives in lesson10-6.ts; this adds the theory note to its Go deep
+ "10-6": {
+  deepNotes: h`
+<h3>What "the loss" actually is</h3>
+<p><b>In plain English:</b> at every position the model gives a probability to the token that really comes next. If it gave the right token a high probability, it was barely surprised and the loss is small. If it gave it a low probability, it was very surprised and the loss is big. Training makes the loss smaller, on average, across trillions of tokens.</p>
+<p>The usual measure is the <b>cross-entropy loss</b>:</p>
+\[\text{loss} = -\log p(\text{correct next token})\]
+<ul>
+<li>\(p(\dots)\) is the probability the model gave the token that really came next, between 0 and 1.</li>
+<li>\(\log\) is the natural logarithm (the \(\ln\) button on a calculator). For numbers below 1 it is negative, so the minus sign turns the loss into a positive number.</li>
+</ul>
+<p><b>Small example.</b> If the model gave the right token a probability of 0.9, the loss is \(-\ln 0.9 \approx 0.11\): barely surprised. If it gave only 0.1, the loss is \(-\ln 0.1 \approx 2.30\): very surprised. A perfect guess (probability 1) gives a loss of 0.</p>
+<p><b>Why it matters:</b> when model releases show "loss going down" charts, this is the number. The same loss is used in fine-tuning (SFT), just on example conversations instead of raw web text.</p>`,
+ }
 };
