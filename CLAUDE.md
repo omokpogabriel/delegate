@@ -72,3 +72,16 @@ Worked solutions go step by step with the numbers shown. Keep the maths correct:
 
 ## Adding lessons to an existing week
 Append new lessons at the END of the week (see `index.ts`). Lesson numbers shown to learners come from position, and lessons cite each other by number ("lesson 1.4"), so inserting mid-week silently breaks those references. Give new lessons new ids so saved progress is unaffected.
+
+## Month 6 plan (agent track): deploying for free or cheap
+Most learners are individuals in Nigeria, so deployment lessons must lead with options that are free and need no
+international card (Naira cards often fail card checks). Checked on providers' pages, 10 Nov 2026 (re-check when writing):
+- No card needed: Cloudflare Workers free plan (incl. cron triggers); Cloudflare Workers AI (10,000 neurons/day free,
+  open models without a GPU); GitHub Actions (free standard runners in public repos; good for scheduled agents).
+- Card usually needed: Google Cloud Run (2M requests/month free); Oracle Cloud Always Free (Arm server, can run a small
+  open model on CPU); Render free web services (sleep after 15 min idle).
+- Changed: Hugging Face Gradio/Docker Spaces now need a paid plan to create (free accounts keep up to 2 Gradio Spaces).
+- Models: prefer free API tiers, Workers AI or small open models; show monthly cost in naira and dollars.
+- A custom domain costs money; default to the free subdomain the host gives you.
+Week 21 = deploy free/cheap (Docker basics, schedules/webhooks, secrets, health checks, self-hosting an open model);
+the capstone (weeks 23–24) must run on the learner's own budget.

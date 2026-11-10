@@ -74,15 +74,15 @@ export const MONTHS: Month[] = [
    ["Exam week: MCP in use","Have Claude do a real job through your server.",
     ["Complete a real multi-step task via your MCP server","Add auth and rate limits","Publish the server and a demo"]]
   ]},
- {t:"Agents that run without you", k:"Autonomous agents", s:"Production agents, then a capstone that proves it.", reads:["agents","docs"],
-  exam:"Capstone: an agent system that runs unattended in production for two weeks, with metrics on accuracy, cost and how often a human had to step in. Finish with a public demo and write-up.",
+ {t:"Agents that run without you", k:"Autonomous agents", s:"Deploy agents for free or cheap, keep them reliable, then a capstone that proves it.", reads:["agents","docs"],
+  exam:"Capstone: an agent system deployed on a free or low-cost setup that runs unattended for two weeks with real users, with metrics on accuracy, cost per month and how often a human had to step in. Finish with a public demo and write-up.",
   weeks:[
-   ["Scheduled and event-driven agents","Put an agent in CI to review every pull request.",
-    ["Run an agent on a schedule","Trigger one from a webhook or event","Add AI review to your CI pipeline"]],
+   ["Deploy your agent, free or cheap","Project \"Live on a budget\": put one of your agents on the internet for ₦0 a month (or close to it), running on a schedule and from a webhook, with secrets stored safely, a health check, and a free web address (or your own domain if you already have one).",
+    ["Run an agent on a schedule and from a webhook","Add AI review to your CI pipeline","Package the agent so it runs the same anywhere (Docker basics)","Deploy on a free tier that needs no card (Cloudflare Workers or GitHub Actions), with secrets stored on the server","Use free or very cheap models: free API tiers, Cloudflare Workers AI, or a small open model","Self-hosting: when a free cloud server or a rented GPU makes sense for an open model, and what it costs per month"]],
    ["LLMOps: running AI apps reliably and safely","Put one of your AI apps under LLMOps: versioned prompts and models, evals on every change, tracing with cost, a canary and a practised rollback.",
     ["Log and trace every run, with cost","Set permissions and spend limits","Test against prompt injection","Decide where a human must approve","Version prompts, models and settings, and run evals on every change","Roll out changes to a small share first, and practise a rollback"]],
    ["Capstone: build and deploy","Ship the capstone and start the two-week unattended run.",
-    ["Pick a real problem with real users","Deploy with monitoring from day one","Start the two-week run"]],
+    ["Pick a real problem with real users","Deploy with monitoring from day one","Start the two-week run","Keep the running cost within a budget you set, and write it down per month"]],
    ["Capstone: measure and demo","Let it run, measure everything, then show it.",
     ["Track accuracy, cost and human interventions","Fix the top three failure modes","Give a public demo and publish the final write-up"]]
   ]}
