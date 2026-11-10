@@ -79,8 +79,8 @@ export const MONTHS: Month[] = [
   weeks:[
    ["Scheduled and event-driven agents","Put an agent in CI to review every pull request.",
     ["Run an agent on a schedule","Trigger one from a webhook or event","Add AI review to your CI pipeline"]],
-   ["Running agents safely","Make your agents observable, bounded and hard to trick.",
-    ["Log and trace every run, with cost","Set permissions and spend limits","Test against prompt injection","Decide where a human must approve"]],
+   ["LLMOps: running AI apps reliably and safely","Put one of your AI apps under LLMOps: versioned prompts and models, evals on every change, tracing with cost, a canary and a practised rollback.",
+    ["Log and trace every run, with cost","Set permissions and spend limits","Test against prompt injection","Decide where a human must approve","Version prompts, models and settings, and run evals on every change","Roll out changes to a small share first, and practise a rollback"]],
    ["Capstone: build and deploy","Ship the capstone and start the two-week unattended run.",
     ["Pick a real problem with real users","Deploy with monitoring from day one","Start the two-week run"]],
    ["Capstone: measure and demo","Let it run, measure everything, then show it.",

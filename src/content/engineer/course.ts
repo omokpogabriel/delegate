@@ -13,7 +13,9 @@ export const E_LINKS: Record<string, [string, string]> = {
   peft:["Hugging Face PEFT docs","https://huggingface.co/docs/peft"],
   evals:["Hamel Husain on evals","https://hamel.dev"],
   agents:["Building effective agents (Anthropic)","https://www.anthropic.com/research/building-effective-agents"],
-  efficientml:["MIT 6.5940 EfficientML","https://hanlab.mit.edu/courses/2023-fall-65940"]
+  efficientml:["MIT 6.5940 EfficientML","https://hanlab.mit.edu/courses/2023-fall-65940"],
+  mlops:["MLOps: continuous delivery and automation pipelines (Google Cloud)","https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning"],
+  madewithml:["Made With ML (free MLOps course)","https://madewithml.com"]
 };
 
 export const E_MONTHS: Month[] = [
@@ -37,9 +39,9 @@ export const E_MONTHS: Month[] = [
    ["Backpropagation and automatic differentiation","Build micrograd: a scalar autograd engine in about 150 lines.",
     ["Watch Karpathy's micrograd lecture and 3Blue1Brown's backprop calculus","Derive the chain rule for a three-node graph on paper","Build the engine and check gradients numerically","Train a small MLP with it"]],
    ["Training in practice","Move to PyTorch and make a network train reliably: initialisation, normalisation, optimisers, learning-rate schedules.",
-    ["Watch Stanford CS336 Lecture 2","Count the FLOPs and memory of a model before you run it","Compare SGD, momentum and Adam on the same task","Diagnose a network that won't train, from its loss curve"]],
+    ["Watch Stanford CS336 Lecture 2","Count the FLOPs and memory of a model before you run it","Compare SGD, momentum and Adam on the same task","Diagnose a network that won't train, from its loss curve","Track every training run in MLflow (parameters, metrics, model file)"]],
    ["Exam week: train it properly","Ship the month-two exam.",
-    ["Train a network on a real dataset to over 95% test accuracy","Hold out a test set you touch only once","Log every experiment","Write up what mattered and what didn't"]]
+    ["Train a network on a real dataset to over 95% test accuracy","Hold out a test set you touch only once","Log every experiment in MLflow","Write up what mattered and what didn't"]]
   ]},
  {t:"Language models and transformers", k:"Transformers", s:"Tokenization, attention, and building a GPT yourself.", reads:["cs336","cs224n","zth"],
   exam:"A GPT you wrote yourself, with your own BPE tokenizer, trained on a corpus you chose (Nigerian Pidgin or Yoruba text is a good one), with loss curves and samples.",
@@ -63,7 +65,7 @@ export const E_MONTHS: Month[] = [
    ["LoRA and quantisation","Fine-tune a 7–8B model on one consumer GPU.",
     ["Watch MIT 6.5940 Lecture 5 (quantisation)","Derive LoRA's parameter count for a given rank","Fine-tune with QLoRA","Measure memory, speed and quality at 16, 8 and 4 bits"]],
    ["Exam week: fine-tune and prove it","Ship the month-four exam.",
-    ["Pick a real task and build a 100+ case eval set first","Compare base, prompted and fine-tuned models","Report accuracy, cost and latency","Publish the model card and the write-up"]]
+    ["Pick a real task and build a 100+ case eval set first","Compare base, prompted and fine-tuned models","Report accuracy, cost and latency","Publish the model card and the write-up","Register the model with its data version and eval results (you'll take it to production in Week 21)"]]
   ]},
  {t:"Evaluation and retrieval", k:"Evals & RAG", s:"Measure what a model can do, then give it the knowledge it lacks.", reads:["evals","cs224n","cs336"],
   exam:"A retrieval-augmented system over a real document set (clinical guidelines are a good choice), with retrieval and answer accuracy measured separately on 100+ questions.",
@@ -77,13 +79,13 @@ export const E_MONTHS: Month[] = [
    ["Exam week: measured RAG","Ship the month-five exam.",
     ["Build the system end to end","Write 100+ questions with sourced answers","Report retrieval recall, answer accuracy and citation accuracy","Publish failure cases and fixes"]]
   ]},
- {t:"Agents and production AI systems", k:"Agents & production", s:"Reasoning, tool use, inference efficiency, and systems that run unattended.", reads:["agents","cs336","evals"],
-  exam:"Capstone: a production AI system with real users (the ClinicVox triage service is a good candidate), with evals in CI, cost and latency dashboards, and two weeks of measured live performance.",
+ {t:"MLOps, agents and production AI", k:"MLOps & production", s:"MLOps end to end, then agents, inference efficiency, and systems that run unattended.", reads:["mlops","madewithml","agents","cs336"],
+  exam:"Capstone: a production AI system with real users (the ClinicVox triage service is a good candidate), run through your MLOps pipeline: versioned data, tracked experiments, a registered model, evals in CI, cost and latency dashboards, drift monitoring, and two weeks of measured live performance.",
   weeks:[
-   ["Reasoning and agents","Write a tool-using agent loop from scratch and evaluate it on 30 multi-step tasks.",
-    ["Watch Stanford CS224N Spring 2024 Lecture 14 (reasoning and agents)","Implement the tool-call loop with stop conditions","Measure success rate and steps per task","Classify every failure"]],
-   ["Inference and serving","Serve an open model and make it fast and cheap.",
-    ["Watch Stanford CS336 Lecture 10 (inference)","Explain the KV cache and compute its memory","Benchmark throughput with batching","Pick the cheapest setup that meets a latency target"]],
+   ["MLOps: the life of a model in production","Take your Month 4 model through a full MLOps pipeline: versioned data, tracked experiments, a registered model, a served API with CI/CD, and a drift alert.",
+    ["Version your dataset with DVC and write its datasheet","Track runs in MLflow and register the best model with a model card","Serve it behind an API with CI gates and a canary","Monitor drift with PSI and wire one alert with an owner"]],
+   ["Agents and inference","Write a tool-using agent loop, evaluate it, then serve an open model fast and cheap.",
+    ["Watch Stanford CS224N Spring 2024 Lecture 14 (reasoning and agents)","Implement the tool-call loop and measure success rate on 30 tasks","Watch Stanford CS336 Lecture 10 (inference) and compute KV-cache memory","Benchmark throughput with batching and pick the cheapest setup that meets a latency target"]],
    ["Production: monitoring, safety and cost","Put an AI feature behind evals in CI, tracing, and spend limits.",
     ["Watch the Berkeley CS294 LLM agents overview","Run your eval set on every pull request","Trace every model call with cost and latency","Red-team it for prompt injection"]],
    ["Capstone","Ship it, run it for two weeks, measure everything.",

@@ -58,6 +58,8 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
   const main = vids.find(canEmbed);
   const rest = vids.filter((v) => v !== main);
   const unit = t.copy.unit;
+  /** the next written lesson skips whole weeks that have no lessons yet */
+  const gap = !!nxt && nxt.w > cur.w + 1;
   const h1 = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -141,15 +143,22 @@ function LessonView({ t, idx }: { t: Track; idx: number }) {
 
             <Quiz questions={l.quiz} unit={unit} />
 
+            {gap && (
+              <p className="gapnote" role="note">
+                <b>Weeks {cur.w + 1}–{nxt!.w - 1} are being written.</b> Keep going with their weekly builds and tasks in the curriculum,
+                or jump ahead to Week {nxt!.w}: {t.weekOf(nxt!.w)[0]}.
+              </p>
+            )}
+
             <div className="actions">
               {prev ? <Link className="btn btn-ghost btn-sm" to={t.lessonHref(prev.l.id)}><Icon name="left" />Previous</Link> : <span />}
               <div className="r">
                 <button className="btn btn-ghost btn-sm" aria-pressed={done} onClick={() => setItem(t.lessonKey(l.id), !done)}>
                   <Icon name="check" /><span>{done ? "Completed" : "Mark complete"}</span>
                 </button>
-                {nxt
-                  ? <Link className="btn btn-primary btn-sm" to={t.lessonHref(nxt.l.id)}>Next {unit}<Icon name="right" /></Link>
-                  : <Link className="btn btn-primary btn-sm" to={t.hash("content")}>Back to curriculum</Link>}
+                {nxt && !gap && <Link className="btn btn-primary btn-sm" to={t.lessonHref(nxt.l.id)}>Next {unit}<Icon name="right" /></Link>}
+                {nxt && gap && <Link className="btn btn-ghost btn-sm" to={t.lessonHref(nxt.l.id)}>Jump to Week {nxt.w}<Icon name="right" /></Link>}
+                {(!nxt || gap) && <Link className="btn btn-primary btn-sm" to={t.hash(`w${cur.w + 1}`)}>{nxt ? `Week ${cur.w + 1} in the curriculum` : "Back to curriculum"}</Link>}
               </div>
             </div>
           </article>

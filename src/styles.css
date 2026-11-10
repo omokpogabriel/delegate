@@ -601,3 +601,4 @@ details.deep .tip{font-size:.92rem;color:var(--ink-2);margin:-4px 0 14px;max-wid
   .fb-page{padding:20px 0 90px}
 }
 .fb-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.gapnote{margin:4px 0 18px;padding:14px 16px;border-radius:var(--r);background:var(--brand-soft);font-size:.95rem}
