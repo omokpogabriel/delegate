@@ -51,16 +51,16 @@ export const MONTHS: Month[] = [
     ["Run your eval set across all models","Chart cost, latency and accuracy","Publish a recommendation with the numbers"]]
   ]},
  {t:"Context and memory", s:"What the model sees, what it remembers, and how it finds things.", reads:["qdrant","graphrag"],
-  exam:"An assistant that answers questions over a real set of documents, with its accuracy measured by your month-three eval method.",
+  exam:"Project \"Ask the shop\": a WhatsApp-style assistant that answers from a real business's documents, reads photos and understands voice notes, cites its sources, says when it doesn't know, and is measured on retrieval and answer accuracy with real users.",
   weeks:[
-   ["Context engineering","Run the same long task with and without context discipline and compare.",
-    ["Decide what goes in context and in what order","Compare compaction against starting a fresh session","Use subagents to isolate noisy work"]],
-   ["Retrieval (RAG)","Build search over 100+ real documents.",
-    ["Split documents into chunks and test chunk sizes","Store embeddings in a vector database","Add hybrid search and reranking, and measure the difference"]],
-   ["Knowledge graphs and agent memory","Model one domain as entities and relationships.",
-    ["Extract entities and relations with a model","Answer a question that needs several hops through the graph","Design file-based memory for an agent across sessions"]],
-   ["Exam week: document assistant","Ship it and prove its accuracy.",
-    ["Build the assistant end to end","Write 30 eval questions with answers","Publish accuracy, failure cases and fixes"]]
+   ["Context engineering and memory","Project \"Lean context\": cut one AI feature's context by 30%+ without losing quality, practise a fresh-session handover, and give an agent file-based memory.",
+    ["Decide what goes in context and in what order","Compare compaction against starting a fresh session","Use subagents to isolate noisy work","Give an agent file-based memory it can read, update and forget"]],
+   ["Embeddings, vector databases and your first RAG","Project \"Ask the shop\" v1: semantic search and a RAG assistant over 50+ snippets of a real business's public information, citing its sources.",
+    ["Split documents into chunks and test chunk sizes","Store embeddings in a vector database","Add hybrid search and reranking, and measure the difference","Build semantic search from scratch with free, local embeddings","Choose a free vector database (Chroma, pgvector on Neon, or Cloudflare Vectorize)"]],
+   ["Better retrieval: chunking, hybrid search, citations, graphs and images","Project \"Ask the shop\" v2: better parsing and chunking, hybrid search with reranking, checked citations, honest refusals, and photos, scans and voice notes in the knowledge base.",
+    ["Extract entities and relations with a model","Answer a question that needs several hops through the graph","Design file-based memory for an agent across sessions","Parse PDFs, scans and chat exports into clean chunks","Check citations automatically and measure correct refusals","Add photos, scans and voice notes to the knowledge base"]],
+   ["Exam week: document assistant","Project \"Ask the shop\": ship it to real users and prove its accuracy.",
+    ["Build the assistant end to end","Write 30 eval questions with answers","Publish accuracy, failure cases and fixes","Measure recall@k, answer, citation and refusal accuracy on 40 questions","Run it with at least 5 real users for a week"]]
   ]},
  {t:"Harnesses and MCP", s:"Build the loop yourself, then plug real systems into it.", reads:["agents","codex","mcp","spring"],
   exam:"An MCP server for a real API, used successfully by Claude to complete real work.",
