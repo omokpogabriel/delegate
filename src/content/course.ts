@@ -81,9 +81,9 @@ export const MONTHS: Month[] = [
     ["Run an agent on a schedule and from a webhook","Add AI review to your CI pipeline","Package the agent so it runs the same anywhere (Docker basics)","Deploy on a free tier that needs no card (Cloudflare Workers or GitHub Actions), with secrets stored on the server","Use free or very cheap models: free API tiers, Cloudflare Workers AI, or a small open model","Self-hosting: when a free cloud server or a rented GPU makes sense for an open model, and what it costs per month"]],
    ["LLMOps: running AI apps reliably and safely","Put one of your AI apps under LLMOps: versioned prompts and models, evals on every change, tracing with cost, a canary and a practised rollback.",
     ["Log and trace every run, with cost","Set permissions and spend limits","Test against prompt injection","Decide where a human must approve","Version prompts, models and settings, and run evals on every change","Roll out changes to a small share first, and practise a rollback"]],
-   ["Capstone: build and deploy","Ship the capstone and start the two-week unattended run.",
-    ["Pick a real problem with real users","Deploy with monitoring from day one","Start the two-week run","Keep the running cost within a budget you set, and write it down per month"]],
-   ["Capstone: measure and demo","Let it run, measure everything, then show it.",
-    ["Track accuracy, cost and human interventions","Fix the top three failure modes","Give a public demo and publish the final write-up"]]
+   ["Capstone: build and deploy","Capstone project: choose a real problem with real users, build the simplest thing that works, launch with monitoring and a real human handover, and start a two-week unattended run.",
+    ["Pick a real problem with real users","Deploy with monitoring from day one","Start the two-week run","Keep the running cost within a budget you set, and write it down per month","Write the spec, eval set, budget and risk list before code","Soft-launch to 1-2 users and read every conversation"]],
+   ["Capstone: measure and demo","Capstone project: measure accuracy, cost and human interventions on real use, fix the top three failure modes, then demo it and publish the final write-up.",
+    ["Track accuracy, cost and human interventions","Fix the top three failure modes","Give a public demo and publish the final write-up","Interview your users and the business owner about the results","Plan your next three months: a job, clients or the AI engineer track"]]
   ]}
 ];
