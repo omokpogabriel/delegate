@@ -46,9 +46,9 @@ Owner: Gabriel Omokpo (ISUX Technologies). Live at https://learnai.isuxtech.com
 learners' saved progress depends on them. The AI engineer track adds an `e` prefix (`Le1-2`, `te3_0`).
 
 ## Status
-- Agent track: lessons for weeks 1–16 and week 22 (LLMOps, `week22.ts`) (74 lessons; weeks 11–12 in `weeks11-12.ts`, 13–16 in `weeks13-16.ts`; the Nov 2026 gap-fill lessons 1.5, 1.6, 2.5, 3.5, 7.5, 9.6, 10.7 are in `upgrade-w1-10.ts`, including 10.6 on how LLMs are trained, in `lesson10-6.ts`), all with objectives and problem sets; weeks 5–10 also have "Stuck?" callouts and plain-English explanations of new terms.
+- Agent track: lessons for weeks 1–20 and week 22 (LLMOps, `week22.ts`) (89 lessons; weeks 11–12 in `weeks11-12.ts`, 13–16 in `weeks13-16.ts`, 17–20 in `weeks17-20.ts`; the Nov 2026 gap-fill lessons 1.5, 1.6, 2.5, 3.5, 7.5, 9.6, 10.7 are in `upgrade-w1-10.ts`, including 10.6 on how LLMs are trained, in `lesson10-6.ts`), all with objectives and problem sets; weeks 5–10 also have "Stuck?" callouts and plain-English explanations of new terms.
 - AI engineer track: outline for all 24 weeks, each anchored to a named lecture; full lecture notes for Week 1 and Week 21 (MLOps: data and DVC, MLflow tracking and registry, serving and CI/CD, drift monitoring).
-- Next likely work: agent-track Month 5 (weeks 17–20: agent loop from scratch, frameworks incl. LangChain, MCP for beginners then MCP servers, the MCP exam), then weeks 21, 23–24 (cheap deployment, capstone).
+- Next likely work: agent-track week 21 (deploy free or cheap; re-check free tiers first, see "Month 6 plan") and weeks 23–24 (capstone). Then the AI engineer track, weeks 2–20 and 22–24.
 
 ## Lecture standard
 Each lecture: learning objectives, prerequisites, rigorous notes with worked examples and the maths written out,

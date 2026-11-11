@@ -63,16 +63,16 @@ export const MONTHS: Month[] = [
     ["Build the assistant end to end","Write 30 eval questions with answers","Publish accuracy, failure cases and fixes","Measure recall@k, answer, citation and refusal accuracy on 40 questions","Run it with at least 5 real users for a week"]]
   ]},
  {t:"Harnesses and MCP", s:"Build the loop yourself, then plug real systems into it.", reads:["agents","codex","mcp","spring"],
-  exam:"An MCP server for a real API, used successfully by Claude to complete real work.",
+  exam:"Project \"Plug it in\": an MCP server for a real system (for example Paystack in test mode, a bank-statement CSV or a shop's inventory), used by an agent to do real work, with measured success, a security review and a public demo.",
   weeks:[
-   ["An agent loop from scratch","Write a working agent in about 150 lines: call model, run tool, feed back, repeat.",
-    ["Implement the tool-call loop","Add stop conditions and step limits","Handle tool errors so the agent can recover"]],
-   ["Frameworks and real harnesses","Rebuild your agent with the Claude Agent SDK or Spring AI.",
-    ["Rebuild with a framework and compare","Read the source of an open-source harness","Write up three design choices you'd copy"]],
-   ["MCP servers","Expose one real API as MCP tools.",
-    ["Learn MCP tools, resources and prompts","Design tool names and descriptions an agent understands","Test it from Claude and fix what confuses it"]],
-   ["Exam week: MCP in use","Have Claude do a real job through your server.",
-    ["Complete a real multi-step task via your MCP server","Add auth and rate limits","Publish the server and a demo"]]
+   ["An agent loop from scratch","Project \"Shop agent\": a support agent built from scratch with three tools, error handling, step/time/cost limits, routing and a self-check, evaluated on 20 tasks × 3 runs.",
+    ["Implement the tool-call loop","Add stop conditions and step limits","Handle tool errors so the agent can recover","Add routing and a self-check, and compare steps and cost","Evaluate on 20 tasks by final state, steps, cost and safety"]],
+   ["Frameworks and real harnesses","Project \"Same agent, three ways\": rebuild your shop agent with the Claude Agent SDK and LangChain (or Spring AI), compare them, and read a real open-source harness.",
+    ["Rebuild with a framework and compare","Read the source of an open-source harness","Write up three design choices you'd copy","Run the same agent on a hosted and a local model through LangChain"]],
+   ["MCP servers","Project \"Shop server\": an MCP server for a real system with task-shaped tools and a resource, tested in the MCP Inspector, used from Claude Code and security-reviewed.",
+    ["Learn MCP tools, resources and prompts","Design tool names and descriptions an agent understands","Test it from Claude and fix what confuses it","Connect an existing MCP server before building your own","Security-review it: least privilege, limits in code, injection test"]],
+   ["Exam week: MCP in use","Project \"Plug it in\": connect a real system through MCP, prove it works on real tasks, and publish it.",
+    ["Complete a real multi-step task via your MCP server","Add auth and rate limits","Publish the server and a demo","Write a skill that uses your server for the most common request"]]
   ]},
  {t:"Agents that run without you", k:"Autonomous agents", s:"Deploy agents for free or cheap, keep them reliable, then a capstone that proves it.", reads:["agents","docs"],
   exam:"Capstone: an agent system deployed on a free or low-cost setup that runs unattended for two weeks with real users, with metrics on accuracy, cost per month and how often a human had to step in. Finish with a public demo and write-up.",
